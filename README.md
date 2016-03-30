@@ -3,6 +3,7 @@
 Xxx allow you use Wordpress actions and filters in your own code. The syntax is easy to use as you expect it to be after seeing it in Wordpress it self.
 
 
+* [Filters](FILTERS.md)
 
 
 # Chaining filters
