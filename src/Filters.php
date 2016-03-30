@@ -57,7 +57,7 @@ class Filters
             return $value;
 
         reset(self::$filters[$tag]);
-
+        
         do {
 
             $entry = current(self::$filters[$tag]);
