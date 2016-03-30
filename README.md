@@ -1,5 +1,6 @@
 # Sandbox
 
+Xxx allow you use Wordpress actions and filters in your own code. 
 
 # Filters callback functions
 
