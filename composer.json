@@ -1,0 +1,22 @@
+{
+  "name": "johnnymast/sandbox",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Johnny Mast",
+      "email": "mastjohnny@gmail.com"
+    }
+  ],
+  "autoload": {
+  "psr-4": {
+    "Sandbox\\": "src/"
+  }
+},
+  "autoload-dev": {
+    "psr-4": {
+      "Sandbox\\Tests\\": "tests/"
+    }
+  }
+}
