@@ -30,6 +30,26 @@ Output: @@This is a text@@
 
 ```
 
+#Chaining actions
+
+```php
+Sandbox\Actions::add_action('say_hi', function($name='') {
+    echo "Hi: ".$name."\n";
+});
+
+Sandbox\Actions::add_action('say_bye', function($name='') {
+    echo "Bye: ".$name."\n";
+});
+
+Sandbox\Actions::do_action(['say_hi', 'say_bye'], 'GitHub');
+```
+
+```bash
+$ php ./actions.php
+Hi: GitHub
+Bye: GitHub
+```
+
 ## Requirements
 
 The following versions of PHP are supported by this version.
