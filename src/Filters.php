@@ -10,13 +10,13 @@ class Filters
      * @var array
      */
     static private $filters = [];
-    
+
     /**
      * @param string $tag
      * @param string $callback
      * @param int $priority
      */
-    static function addFilter($tag = '', $callback = '', $priority = 10)
+    static function add_filter($tag = '', $callback = '', $priority = 10)
     {
         if (isset(self::$filters[$tag]) == false) {
             self::$filters[$tag] = [];
@@ -34,14 +34,14 @@ class Filters
      * @param string $value
      * @return string
      */
-    static function applyFilter($filter = '', $value = '')
+    static function apple_filter($filter = '', $value = '')
     {
         if (is_array($filter)) {
             foreach ($filter as $single) {
-                $value = self::executeFilter($single, $value);
+                $value = self::execute_filter($single, $value);
             }
         } else {
-            $value = self::executeFilter($filter, $value);
+            $value = self::execute_filter($filter, $value);
         }
         return $value;
     }
@@ -51,10 +51,12 @@ class Filters
      * @param string $value
      * @return string
      */
-    private static function executeFilter($tag, $value = '')
+    private static function execute_filter($tag, $value = '')
     {
         if (isset(self::$filters[$tag]) == false)
             return $value;
+
+        reset(self::$filters[$tag]);
 
         do {
 

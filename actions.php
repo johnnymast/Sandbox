@@ -1,22 +1,16 @@
 <?php
 require dirname(__FILE__).'/vendor/autoload.php';
 
-// TODO: Invalid callbacks
-
-Sandbox\Filters::addFilter('prepend_at', function($text) {
+function func_prepend_at($text='') {
     return '@@'.$text;
-}, 1);
+}
+Sandbox\Filters::add_filter('prepend_at', 'func_prepend_at');
 
-Sandbox\Filters::addFilter('prepend_at', function($text) {
-    return '!!'.$text;
-}, 2);
 
-Sandbox\Filters::addFilter('prepend_at', function($text) {
+function func_append_at($text='') {
     return $text.'@@';
-},1);
+}
+Sandbox\Filters::add_filter('append_at', 'func_append_at');
+$out = Sandbox\Filters::apple_filter(['prepend_at', 'append_at'], 'This is a text');
 
-//Sandbox\Actions::debug();
-$out = Sandbox\Filters::applyFilter(array('append_at', 'prepend_at'), 'hello');
-
-echo 'done: '.$out;
-echo "\n";
+echo "Output: ".$output."\n";
