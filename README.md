@@ -2,9 +2,9 @@
 
 Xxx allow you use Wordpress actions and filters in your own code. The syntax is easy to use as you expect it to be after seeing it in Wordpress it self.
 
-
+***Have a look at***
 * [Filters](FILTERS.md)
-
+* [Actions](ACTIONS.md)
 
 # Chaining filters
 
