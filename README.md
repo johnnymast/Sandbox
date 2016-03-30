@@ -119,3 +119,23 @@ $ php ./functions.php
 Output: @@This is a text@@
 
 ```
+
+## Requirements
+
+The following versions of PHP are supported by this version.
+
++ PHP 5.4
++ PHP 5.5
++ PHP 5.6
++ HHVM
+
+## Author
+
+This package is created and maintained by [Johnny Mast](https://github.com/johnnymast) but it was based on [Climate](https://github.com/thephpleague/climate)  by [Joe Tannenbaum](https://github.com/joetannenbaum). For feature requests and suggestions
+you could consider sending me an e-mail or fill out an [issue](https://github.com/johnnymast/redbox-cli/issues).
+
+## License
+
+Redbox-cli is released under the MIT public license.
+
+[LICENSE](LICENSE.md)
