@@ -69,5 +69,3 @@ This package is created and maintained by [Johnny Mast](https://github.com/johnn
 xxx is released under the MIT public license.
 
 [LICENSE](LICENSE.md)
-
-oops

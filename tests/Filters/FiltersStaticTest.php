@@ -92,6 +92,8 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($testagaints['new_filter'][1], $property->getValue()['new_filter'][0]);
     }
 
+    //FIXME: Implement this when im not drunk ...
+    
 //    public function test_add_filter_in_class_method_has_the_correct_callback() {
 //        $filters  = new \ReflectionClass('Sandbox\Filters');
 //        $property = $filters->getProperty('filters');
