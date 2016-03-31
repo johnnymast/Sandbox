@@ -18,5 +18,8 @@
     "psr-4": {
       "Sandbox\\Tests\\": "tests/"
     }
+  },
+  "require": {
+    "phpunit/phpunit": "4.8.24"
   }
 }
