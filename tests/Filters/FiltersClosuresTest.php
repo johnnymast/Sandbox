@@ -10,7 +10,7 @@ use Sandbox;
 class FiltersClosuresTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     *
+     * @covers Sandbox\Filters::apply_filter
      */
     public function test_apply_filter_works_correct_with_one_closure()
     {
@@ -31,7 +31,7 @@ class FiltersClosuresTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::apply_filter
      */
     public function test_apply_filter_works_correct_with_two_closures()
     {

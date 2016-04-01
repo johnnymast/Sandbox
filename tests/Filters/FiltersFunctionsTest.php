@@ -13,7 +13,7 @@ require_once dirname(__FILE__) . '/assets/myCallbackFunctions.php';
 class FiltersFunctionsTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     *
+     * @covers Sandbox\Filters::apply_filter
      */
     public function test_apply_filter_works_correct_with_one_function()
     {
@@ -32,7 +32,7 @@ class FiltersFunctionsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::apply_filter
      */
     public function test_apply_filter_works_correct_with_two_functions()
     {
