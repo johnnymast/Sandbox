@@ -44,7 +44,7 @@ class Filters
         if (empty($tag) || empty($callback))
             return false;
 
-        if (isset(self::$filters[$tag]) == true) {
+        if (isset(self::$filters[$tag]) === true) {
             $data = array();
             $found = false;
 
