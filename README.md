@@ -21,7 +21,7 @@ Sandbox\Filters::add_filter('append_at', function($text='') {
 });
 
 
-$out = Sandbox\Filters::apple_filter(['prepend_at', 'append_at'], 'This is a text');
+$out = Sandbox\Filters::apply_filter(['prepend_at', 'append_at'], 'This is a text');
 echo "Output: ".$out."\n";
 ```
 

@@ -93,27 +93,27 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     //FIXME: Implement this when im not drunk ...
-    
-//    public function test_add_filter_in_class_method_has_the_correct_callback() {
-//        $filters  = new \ReflectionClass('Sandbox\Filters');
-//        $property = $filters->getProperty('filters');
-//        $property->setAccessible(true);
-//        $property->setValue([]);
-//
-//        $instance = new Sandbox\Tests\Filters\Assets\myMobclass1;
-//
-//        $testagaints = [
-//            'manipulate_string' => [
-//                [
-//                    'callback' => $instance->prepend_chars(),
-//                    'priority' => 10,
-//                ],
-//                [
-//                    'callback' => $instance->append_chars(),
-//                    'priority' => 10,
-//                ],
-//            ]
-//        ];
-//        $this->assertEquals($testagaints, $property->getValue());
-//    }
+
+    public function test_add_filter_in_class_method_has_the_correct_callback() {
+        $filters  = new \ReflectionClass('Sandbox\Filters');
+        $property = $filters->getProperty('filters');
+        $property->setAccessible(true);
+        $property->setValue([]);
+
+        $instance = new Sandbox\Tests\Filters\Assets\myMobclass1;
+
+        $testagaints = [
+            'manipulate_string' => [
+                [
+                    'callback' => [$instance, 'append_chars'],
+                    'priority' => 10,
+                ],
+                [
+                    'callback' => [$instance, 'prepend_chars'],
+                    'priority' => 10,
+                ],
+            ]
+        ];
+        $this->assertEquals($testagaints, $property->getValue());
+    }
 }

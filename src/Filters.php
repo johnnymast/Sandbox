@@ -34,7 +34,7 @@ class Filters
      * @param string $value
      * @return string
      */
-    static function apple_filter($filter = '', $value = '')
+    static function apply_filter($filter = '', $value = '')
     {
         if (is_array($filter)) {
             foreach ($filter as $single) {
@@ -45,7 +45,7 @@ class Filters
         }
         return $value;
     }
-
+    
     /**
      * @param $tag
      * @param string $value

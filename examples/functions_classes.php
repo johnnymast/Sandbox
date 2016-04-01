@@ -16,7 +16,7 @@ class Filter {
         Sandbox\Filters::add_filter('manipulate_string', [$this, 'prepend_chars']);
         Sandbox\Filters::add_filter('manipulate_string', [$this, 'append_chars']);
 
-        return Sandbox\Filters::apple_filter('manipulate_string', 'This is a text');
+        return Sandbox\Filters::apply_filter('manipulate_string', 'This is a text');
     }
 }
 

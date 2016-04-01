@@ -11,5 +11,5 @@ function func_first($text='') {
 }
 Sandbox\Filters::add_filter('prepend_at', 'func_first', 0);
 
-$out = Sandbox\Filters::apple_filter('prepend_at', 'This is a text');
+$out = Sandbox\Filters::apply_filter('prepend_at', 'This is a text');
 echo "Output: ".$out."\n";

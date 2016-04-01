@@ -6,7 +6,7 @@ function func_prepend_at($text='') {
 }
 Sandbox\Filters::add_filter('prepend_at', 'func_prepend_at');
 
-$out = Sandbox\Filters::apple_filter('prepend_at', 'This is a text');
+$out = Sandbox\Filters::apply_filter('prepend_at', 'This is a text');
 echo "Output: ".$out."\n";
 ```
 ***Output***
@@ -23,7 +23,7 @@ Sandbox\Filters::add_filter('prepend_at', function($text='') {
     return '@@'.$text;
 });
 
-$out = Sandbox\Filters::apple_filter('prepend_at', 'This is a text');
+$out = Sandbox\Filters::apply_filter('prepend_at', 'This is a text');
 echo "Output: ".$out."\n";
 ```
 
@@ -48,7 +48,7 @@ function func_first($text='') {
 }
 Sandbox\Filters::add_filter('prepend_at', 'func_first', 0);
 
-$out = Sandbox\Filters::apple_filter('prepend_at', 'This is a text');
+$out = Sandbox\Filters::apply_filter('prepend_at', 'This is a text');
 echo "Output: ".$out."\n";
 ```
 ***Output***
@@ -73,8 +73,8 @@ class Filter {
 
     public function execute() {
 
-        Sandbox\Filters::add_filter('manipulate_string', [$this, 'prepend_chars']);
-        Sandbox\Filters::add_filter('manipulate_string', [$this, 'append_chars']);
+        Sandbox\Filters::apply_filter('manipulate_string', [$this, 'prepend_chars']);
+        Sandbox\Filters::apply_filter('manipulate_string', [$this, 'append_chars']);
 
         return Sandbox\Filters::apple_filter('manipulate_string', 'This is a text');
     }
