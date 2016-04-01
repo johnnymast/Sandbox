@@ -136,7 +136,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $instance = new Sandbox\Tests\Filters\Assets\myMobclass1;
+        $instance = new Sandbox\Tests\Filters\Assets\myMockClass1;
 
         $testagaints = [
             'manipulate_string' => [
@@ -241,7 +241,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         /**
          * Test callback is inside a class
          */
-        $instance = new Sandbox\Tests\Filters\Assets\myMobclass1;
+        $instance = new Sandbox\Tests\Filters\Assets\myMockClass1;
         Sandbox\Filters::remove_filter('manipulate_string', [$instance, 'prepend_chars']);
         $expected = [
             'manipulate_string' => [
@@ -277,5 +277,4 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
             Sandbox\Filters::remove_all_filters('some_filter')
         );
     }
-
 }

@@ -17,11 +17,7 @@ class Actions
      * @var array
      */
     private static $actions = [];
-
-    public static function debug() {
-        print_r(self::$actions);
-    }
-
+    
     /**
      * @param string $tag
      * @param string $callback
