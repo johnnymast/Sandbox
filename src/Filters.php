@@ -17,7 +17,7 @@ class Filters
      * @param int $priority
      * @return bool
      */
-    static function add_filter($tag = '', $callback = '', $priority = 10)
+    static public function add_filter($tag = '', $callback = '', $priority = 10)
     {
         if (empty($tag) || empty($callback))
             return false;
@@ -39,7 +39,7 @@ class Filters
      * @param string $callback
      * @return bool
      */
-    static function remove_filter($tag = '', $callback = '')
+    static public function remove_filter($tag = '', $callback = '')
     {
         if (empty($tag) || empty($callback))
             return false;
@@ -67,7 +67,7 @@ class Filters
      * @param string $value
      * @return string
      */
-    static function apply_filter($filter = '', $value = '')
+    static public function apply_filter($filter = '', $value = '')
     {
         if (is_array($filter)) {
             foreach ($filter as $single) {
@@ -106,7 +106,7 @@ class Filters
      * @param string $tag
      * @return bool
      */
-    public function remove_all_filters($tag = '')
+    static public function remove_all_filters($tag = '')
     {
         if (empty($tag))
             return false;
