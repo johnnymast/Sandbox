@@ -5,9 +5,8 @@ use Sandbox;
 use Sandbox\Tests\Filters\Assets;
 
 /**
- * TODO: Lege string ..
- *
- *
+ * @since version 1.0
+ * @covers Filters
  */
 class FiltersStaticTest extends \PHPUnit_Framework_TestCase
 {
@@ -52,9 +51,8 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback = function () {
-        };
-        $testagaints = [
+        $callback = function () {};
+        $expected = [
             'new_filter' => [
                 [
                     'callback' => $callback,
@@ -64,7 +62,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         ];
 
         Sandbox\Filters::add_filter('new_filter', $callback);
-        $this->assertEquals($testagaints, $property->getValue());
+        $this->assertEquals($expected, $property->getValue());
     }
 
     /**
@@ -77,11 +75,9 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback1 = function () {
-        };
-        $callback2 = function () {
-        };
-        $testagaints = [
+        $callback1 = function () {};
+        $callback2 = function () {};
+        $expected = [
             'new_filter' => [
                 [
                     'callback' => $callback1,
@@ -96,7 +92,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
 
         Sandbox\Filters::add_filter('new_filter', $callback1);
         Sandbox\Filters::add_filter('new_filter', $callback2);
-        $this->assertEquals($testagaints, $property->getValue());
+        $this->assertEquals($expected, $property->getValue());
     }
 
     /**
@@ -109,11 +105,9 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback1 = function () {
-        };
-        $callback2 = function () {
-        };
-        $testagaints = [
+        $callback1 = function () {};
+        $callback2 = function () {};
+        $expected = [
             'new_filter' => [
                 [
                     'callback' => $callback1,
@@ -129,7 +123,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         Sandbox\Filters::add_filter('new_filter', $callback1, 1);
         Sandbox\Filters::add_filter('new_filter', $callback2, 0);
 
-        $this->assertEquals($testagaints['new_filter'][1], $property->getValue()['new_filter'][0]);
+        $this->assertEquals($expected['new_filter'][1], $property->getValue()['new_filter'][0]);
     }
 
     /**
@@ -185,8 +179,10 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     function test_remove_filter_returns_true_on_success()
     {
         $callback = function () {};
+        Sandbox\Filters::add_filter('some_filter', $callback);
+
         $this->assertTrue(
-            Sandbox\Filters::remove_filter('some_tag', $callback)
+            Sandbox\Filters::remove_filter('some_filter', $callback)
         );
     }
 
@@ -195,13 +191,68 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
      */
     function test_remove_filter_removes_the_filter_correctly()
     {
-        $callback = function () {};
-        Sandbox\Filters::add_filter('some_filter', $callback, 1);
+        $filters = new \ReflectionClass('Sandbox\Filters');
+        $property = $filters->getProperty('filters');
+        $property->setAccessible(true);
 
+        $reset_filter = function() use ($property) {
+            $property->setValue([]);
+        };
+        $reset_filter();
 
-        $this->assertTrue(
+        /**
+         * Test callback is a string
+         */
+        Sandbox\Filters::add_filter('some_filter', 'callback1', 1);
+        Sandbox\Filters::add_filter('some_filter', 'callback2', 2);
+        Sandbox\Filters::remove_filter('some_filter', 'callback1');
 
-        );
+        $expected = [
+            'some_filter' => [
+                [
+                    'callback' => 'callback2',
+                    'priority' => 2
+                ]
+            ]
+        ];
+        $this->assertEquals($expected, $property->getValue());
+        $reset_filter();
+
+        /**
+         * Test callback is a closure
+         */
+        $callback1 = function () {};
+        $callback2 = function () {};
+        Sandbox\Filters::add_filter('some_filter', $callback1, 1);
+        Sandbox\Filters::add_filter('some_filter', $callback2, 2);
+        Sandbox\Filters::remove_filter('some_filter', $callback1);
+
+        $expected = [
+            'some_filter' => [
+                [
+                    'callback' => $callback2,
+                    'priority' => 2
+                ]
+            ]
+        ];
+        $this->assertEquals($expected, $property->getValue());
+        $reset_filter();
+
+        /**
+         * Test callback is inside a class
+         */
+        $instance = new Sandbox\Tests\Filters\Assets\myMobclass1;
+        Sandbox\Filters::remove_filter('manipulate_string', [$instance, 'prepend_chars']);
+        $expected = [
+            'manipulate_string' => [
+                [
+                    'callback' => [$instance, 'append_chars'],
+                    'priority' => 10,
+                ]
+            ]
+        ];
+        $this->assertEquals($expected, $property->getValue());
+        $reset_filter();
     }
 
     /**

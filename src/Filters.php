@@ -39,37 +39,29 @@ class Filters
      * @param string $callback
      * @return bool
      */
-    static function remove_filter($tag = '', $callback = '') {
+    static function remove_filter($tag = '', $callback = '')
+    {
         if (empty($tag) || empty($callback))
             return false;
 
         if (isset(self::$filters[$tag]) == true) {
-            foreach(self::$filters[$tag] as $index => $item) {
+            $data = array();
+            $found = false;
+
+            foreach (self::$filters[$tag] as $item) {
                 if ($item['callback'] == $callback) {
-                    unset(self::$filters[$tag][$index]);
-                    return true;
+                    $found = true;
+                } else {
+                    $data[] = $item;
                 }
             }
+
+            self::$filters[$tag] = $data;
+            return $found;
         }
         return false;
     }
 
-    /**
-     * @param string $tag
-     * @return bool
-     */
-    public function remove_all_filters($tag = '') {
-        if (empty($tag))
-            return false;
-
-        if (isset(self::$filters[$tag])) {
-            unset(self::$filters[$tag]);
-            return true;
-        }
-
-        return false;
-    }
-    
     /**
      * @param string $filter
      * @param string $value
@@ -86,7 +78,7 @@ class Filters
         }
         return $value;
     }
-    
+
     /**
      * @param $tag
      * @param string $value
@@ -98,7 +90,7 @@ class Filters
             return $value;
 
         reset(self::$filters[$tag]);
-        
+
         do {
 
             $entry = current(self::$filters[$tag]);
@@ -108,5 +100,22 @@ class Filters
         } while (next(self::$filters[$tag]));
 
         return $value;
+    }
+
+    /**
+     * @param string $tag
+     * @return bool
+     */
+    public function remove_all_filters($tag = '')
+    {
+        if (empty($tag))
+            return false;
+
+        if (isset(self::$filters[$tag])) {
+            unset(self::$filters[$tag]);
+            return true;
+        }
+
+        return false;
     }
 }
