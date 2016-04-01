@@ -22,7 +22,7 @@ class Filters
         if (empty($tag) || empty($callback))
             return false;
 
-        if (isset(self::$filters[$tag]) == false) {
+        if (isset(self::$filters[$tag]) === false) {
             self::$filters[$tag] = [];
         }
         self::$filters[$tag][] = [
@@ -86,7 +86,7 @@ class Filters
      */
     private static function execute_filter($tag, $value = '')
     {
-        if (isset(self::$filters[$tag]) == false)
+        if (isset(self::$filters[$tag]) === false)
             return $value;
 
         reset(self::$filters[$tag]);
