@@ -15,9 +15,13 @@ class Filters
      * @param string $tag
      * @param string $callback
      * @param int $priority
+     * @return bool
      */
     static function add_filter($tag = '', $callback = '', $priority = 10)
     {
+        if (empty($tag) || empty($callback))
+            return false;
+
         if (isset(self::$filters[$tag]) == false) {
             self::$filters[$tag] = [];
         }
@@ -27,8 +31,45 @@ class Filters
         ];
 
         self::filterByPriority(self::$filters[$tag]);
+        return true;
     }
 
+    /**
+     * @param string $tag
+     * @param string $callback
+     * @return bool
+     */
+    static function remove_filter($tag = '', $callback = '') {
+        if (empty($tag) || empty($callback))
+            return false;
+
+        if (isset(self::$filters[$tag]) == true) {
+            foreach(self::$filters[$tag] as $index => $item) {
+                if ($item['callback'] == $callback) {
+                    unset(self::$filters[$tag][$index]);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @param string $tag
+     * @return bool
+     */
+    public function remove_all_filters($tag = '') {
+        if (empty($tag))
+            return false;
+
+        if (isset(self::$filters[$tag])) {
+            unset(self::$filters[$tag]);
+            return true;
+        }
+
+        return false;
+    }
+    
     /**
      * @param string $filter
      * @param string $value

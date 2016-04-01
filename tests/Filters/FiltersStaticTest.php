@@ -1,7 +1,8 @@
 <?php
 namespace Sandbox\Tests\Filters;
-use Sandbox\Tests\Filters\Assets;
+
 use Sandbox;
+use Sandbox\Tests\Filters\Assets;
 
 /**
  * TODO: Lege string ..
@@ -13,13 +14,46 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      *
      */
-    public function test_add_filter_adds_filter() {
-        $filters  = new \ReflectionClass('Sandbox\Filters');
+    function test_add_filter_returns_false_on_empty_tag()
+    {
+        $this->assertFalse(
+            Sandbox\Filters::add_filter('', 'some_callback')
+        );
+    }
+
+    /**
+     *
+     */
+    function test_add_filter_returns_false_on_empty_callback()
+    {
+        $this->assertFalse(
+            Sandbox\Filters::add_filter('some_tag', '')
+        );
+    }
+
+    /**
+     *
+     */
+    function test_add_filter_returns_true_on_success()
+    {
+        $callback = function () {};
+        $this->assertTrue(
+            Sandbox\Filters::add_filter('some_tag', $callback)
+        );
+    }
+
+    /**
+     *
+     */
+    public function test_add_filter_adds_filter()
+    {
+        $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback = function () { };
+        $callback = function () {
+        };
         $testagaints = [
             'new_filter' => [
                 [
@@ -36,14 +70,17 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      *
      */
-    public function test_add_filter_adds_multiple_filters() {
-        $filters  = new \ReflectionClass('Sandbox\Filters');
+    public function test_add_filter_adds_multiple_filters()
+    {
+        $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback1 = function () { };
-        $callback2 = function () { };
+        $callback1 = function () {
+        };
+        $callback2 = function () {
+        };
         $testagaints = [
             'new_filter' => [
                 [
@@ -65,14 +102,17 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      *
      */
-    public function test_add_filter_arranges_priority_correct() {
-        $filters  = new \ReflectionClass('Sandbox\Filters');
+    public function test_add_filter_arranges_priority_correct()
+    {
+        $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback1 = function () { };
-        $callback2 = function () { };
+        $callback1 = function () {
+        };
+        $callback2 = function () {
+        };
         $testagaints = [
             'new_filter' => [
                 [
@@ -92,10 +132,12 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($testagaints['new_filter'][1], $property->getValue()['new_filter'][0]);
     }
 
-    //FIXME: Implement this when im not drunk ...
-
-    public function test_add_filter_in_class_method_has_the_correct_callback() {
-        $filters  = new \ReflectionClass('Sandbox\Filters');
+    /**
+     *
+     */
+    public function test_add_filter_in_class_method_has_the_correct_callback()
+    {
+        $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
         $property->setAccessible(true);
         $property->setValue([]);
@@ -116,4 +158,73 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         ];
         $this->assertEquals($testagaints, $property->getValue());
     }
+
+    /**
+     *
+     */
+    function test_remove_filter_returns_false_on_empty_tag()
+    {
+        $this->assertFalse(
+            Sandbox\Filters::remove_filter('', 'some_callback')
+        );
+    }
+
+    /**
+     *
+     */
+    function test_remove_filter_returns_false_on_empty_callback()
+    {
+        $this->assertFalse(
+            Sandbox\Filters::remove_filter('some_tag', '')
+        );
+    }
+
+    /**
+     *
+     */
+    function test_remove_filter_returns_true_on_success()
+    {
+        $callback = function () {};
+        $this->assertTrue(
+            Sandbox\Filters::remove_filter('some_tag', $callback)
+        );
+    }
+
+    /**
+     *
+     */
+    function test_remove_filter_removes_the_filter_correctly()
+    {
+        $callback = function () {};
+        Sandbox\Filters::add_filter('some_filter', $callback, 1);
+
+
+        $this->assertTrue(
+
+        );
+    }
+
+    /**
+     *
+     */
+    function test_remove_all_filters_false_on_empty_tag()
+    {
+        $this->assertFalse(
+            Sandbox\Filters::remove_all_filters('')
+        );
+    }
+
+    /**
+     *
+     */
+    function test_remove_all_filters_returns_true_on_success()
+    {
+        $callback = function () {};
+        Sandbox\Filters::add_filter('some_filter', $callback, 1);
+
+        $this->assertTrue(
+            Sandbox\Filters::remove_all_filters('some_filter')
+        );
+    }
+
 }
