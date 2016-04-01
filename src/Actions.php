@@ -25,7 +25,7 @@ class Actions
      */
     public static function add_action($tag = '', $callback = '', $priority = 10)
     {
-        if (isset(self::$actions[$tag]) == false) {
+        if (isset(self::$actions[$tag]) === false) {
             self::$actions[$tag] = [];
         }
         self::$actions[$tag][] = [
@@ -61,7 +61,7 @@ class Actions
      */
     private static function execute_action($tag, $value = '')
     {
-        if (isset(self::$actions[$tag]) == false)
+        if (isset(self::$actions[$tag]) === false)
             return $value;
 
         reset(self::$actions[$tag]);
