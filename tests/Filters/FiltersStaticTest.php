@@ -6,7 +6,7 @@ use Sandbox\Tests\Filters\Assets;
 
 /**
  * @since version 1.0
- * @covers Filters
+ * @covers Sandbox\Filters
  */
 class FiltersStaticTest extends \PHPUnit_Framework_TestCase
 {
