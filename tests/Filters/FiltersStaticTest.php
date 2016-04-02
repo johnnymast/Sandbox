@@ -150,7 +150,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
                 ],
             ]
         ];
-        $this->assertEquals($expected, $property->getValue());
+        $this->assertSame($expected, $property->getValue());
     }
 
     /**
@@ -215,7 +215,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
                 ]
             ]
         ];
-        $this->assertEquals($expected, $property->getValue());
+        $this->assertSame($expected, $property->getValue());
         $reset_filter();
 
         /**
@@ -235,7 +235,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
                 ]
             ]
         ];
-        $this->assertEquals($expected, $property->getValue());
+        $this->assertSame($expected, $property->getValue());
         $reset_filter();
 
         /**
@@ -251,7 +251,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
                 ]
             ]
         ];
-        $this->assertEquals($expected, $property->getValue());
+        $this->assertSame($expected, $property->getValue());
         $reset_filter();
     }
 

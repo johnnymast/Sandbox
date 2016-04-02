@@ -146,7 +146,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
                 ],
             ]
         ];
-        $this->assertEquals($expected, $property->getValue());
+        $this->assertSame($expected, $property->getValue());
     }
 
     /**
@@ -211,7 +211,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
                 ]
             ]
         ];
-        $this->assertEquals($expected, $property->getValue());
+        $this->assertSame($expected, $property->getValue());
         $reset_actions();
 
         /**
@@ -224,17 +224,16 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         Sandbox\Actions::add_action('some_action', $callback2, 2);
         Sandbox\Actions::remove_action('some_action', $callback1);
 
-        //FIXME
         $expected = [
             'some_action' => [
                 [
-                    'callback' => $callback1, // FIXME: SHOULD FAIL
+                    'callback' => $callback2, // FIXME: SHOULD FAIL
                     'priority' => 2
                 ]
             ]
         ];
-       // print_r($property->getValue()['some_action']);
-        $this->assertEquals($expected, $property->getValue());
+       // print_r($expected);
+        $this->assertSame($expected, $property->getValue());
         $reset_actions();
 
         /**
@@ -250,8 +249,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
                 ]
             ]
         ];
-        $this->assertEquals($expected, $property->getValue());
+        $this->assertSame($expected, $property->getValue());
         $reset_actions();
     }
-
 }
