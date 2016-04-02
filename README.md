@@ -9,6 +9,9 @@ Xxx allow you use Wordpress actions and filters in your own code. The syntax is 
 * [Filters](FILTERS.md)
 * [Actions](ACTIONS.md)
 
+#Fun fact
+I a am not a TDD guy but 50% of this code was written with the TDD concept in mind. Actually i was pretty mutch surprised on how it worked out and the speed the development came in.
+
 # Chaining filters
 
 ```php
