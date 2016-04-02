@@ -150,7 +150,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
                 ],
             ]
         ];
-        print_r($property->getValue());
+        // FIXME
         $this->assertSame($expected, $property->getValue());
     }
 

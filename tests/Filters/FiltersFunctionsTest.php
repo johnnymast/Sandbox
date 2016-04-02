@@ -12,6 +12,7 @@ require_once dirname(__FILE__) . '/Assets/myCallbackFunctions.php';
  */
 class FiltersFunctionsTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @covers Sandbox\Filters::apply_filter
      */
@@ -24,7 +25,7 @@ class FiltersFunctionsTest extends \PHPUnit_Framework_TestCase
 
         $string = 'Hello World';
 
-        Sandbox\Filters::add_filter('prepend_chars', 'Sandbox\Tests\Filters\Assets\my_callback_functions_prepend');
+        Sandbox\Filters::add_filter('prepend_chars', 'Sandbox\Tests\Filters\Assets\my_callback_functions_filter_prepend');
         $output = Sandbox\Filters::apply_filter('prepend_chars', $string);
 
         $expected = '@@' . $string;
@@ -44,8 +45,8 @@ class FiltersFunctionsTest extends \PHPUnit_Framework_TestCase
 
         $string = 'Hello World';
 
-        Sandbox\Filters::add_filter('apply_chars', 'Sandbox\Tests\Filters\Assets\my_callback_functions_prepend');
-        Sandbox\Filters::add_filter('apply_chars', 'Sandbox\Tests\Filters\Assets\my_callback_functions_append');
+        Sandbox\Filters::add_filter('apply_chars', 'Sandbox\Tests\Filters\Assets\my_callback_functions_filter_prepend');
+        Sandbox\Filters::add_filter('apply_chars', 'Sandbox\Tests\Filters\Assets\my_callback_functions_filter_append');
         $output = Sandbox\Filters::apply_filter('apply_chars', $string);
 
         $expected = '@@' . $string . '@@';

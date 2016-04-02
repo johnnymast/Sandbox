@@ -19,12 +19,6 @@ class Actions
     private static $actions = [];
 
 
-    /**
-     * @param string $tag
-     * @param string $callback
-     * @param int $priority
-     * @return bool
-     */
     public static function add_action($tag = '', $callback = '', $priority = 10)
     {
         if (empty($tag) || empty($callback))
@@ -38,10 +32,10 @@ class Actions
             'priority' => $priority,
         ];
 
-        self::$actions[$tag] = self::filterByPriority(self::$actions[$tag]);
+        self::filterByPriority(self::$actions[$tag]);
         return true;
     }
-    
+
     /**
      * @param string $action
      * @param string $value
@@ -59,6 +53,30 @@ class Actions
         return $value;
     }
 
+    /**
+     * @param $tag
+     * @param string $value
+     * @return string
+     */
+    private static function execute_action($tag, $value = '')
+    {
+        if (isset(self::$actions[$tag]) === false)
+            return $value;
+
+        reset(self::$actions[$tag]);
+
+        do {
+
+            $entry = current(self::$actions[$tag]);
+
+            if (is_callable($entry['callback']))
+                call_user_func($entry['callback'], $value);
+
+        } while (next(self::$actions[$tag]));
+
+        // FIXME
+        return $value;
+    }
 
     /**
      * @param string $tag
@@ -89,28 +107,19 @@ class Actions
     }
 
     /**
-     * @param $tag
-     * @param string $value
-     * @return string
+     * @param string $tag
+     * @return bool
      */
-    private static function execute_action($tag, $value = '')
+    static public function remove_all_actions($tag = '')
     {
-        if (isset(self::$actions[$tag]) === false)
-            return $value;
+        if (empty($tag))
+            return false;
 
-        reset(self::$actions[$tag]);
-        
-        do {
+        if (isset(self::$actions[$tag])) {
+            unset(self::$actions[$tag]);
+            return true;
+        }
 
-            $entry = current(self::$actions[$tag]);
-
-            if (is_callable($entry['callback']))
-                call_user_func($entry['callback'], $value);
-
-        } while (next(self::$actions[$tag]));
-
-        // fixme
-        return $value;
+        return false;
     }
-
 }

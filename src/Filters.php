@@ -30,7 +30,7 @@ class Filters
             'priority' => $priority,
         ];
 
-        self::$filters[$tag] = self::filterByPriority(self::$filters[$tag]);
+        self::filterByPriority(self::$filters[$tag]);
         return true;
     }
 
@@ -59,6 +59,23 @@ class Filters
             self::$filters[$tag] = $data;
             return $found;
         }
+        return false;
+    }
+
+    /**
+     * @param string $tag
+     * @return bool
+     */
+    static public function remove_all_filters($tag = '')
+    {
+        if (empty($tag))
+            return false;
+
+        if (isset(self::$filters[$tag])) {
+            unset(self::$filters[$tag]);
+            return true;
+        }
+
         return false;
     }
 
@@ -100,22 +117,5 @@ class Filters
         } while (next(self::$filters[$tag]));
 
         return $value;
-    }
-
-    /**
-     * @param string $tag
-     * @return bool
-     */
-    static public function remove_all_filters($tag = '')
-    {
-        if (empty($tag))
-            return false;
-
-        if (isset(self::$filters[$tag])) {
-            unset(self::$filters[$tag]);
-            return true;
-        }
-
-        return false;
     }
 }

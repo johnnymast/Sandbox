@@ -7,7 +7,7 @@ use Sandbox;
  * @param string $text
  * @return string
  */
-function my_callback_functions_prepend($text = '')
+function my_callback_functions_filter_prepend($text = '')
 {
     return '@@' . $text;
 }
@@ -16,7 +16,7 @@ function my_callback_functions_prepend($text = '')
  * @param string $text
  * @return string
  */
-function my_callback_functions_append($text = '')
+function my_callback_functions_filter_append($text = '')
 {
     return $text . '@@';
 }

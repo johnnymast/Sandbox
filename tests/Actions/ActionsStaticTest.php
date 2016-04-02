@@ -1,6 +1,7 @@
 <?php
 
 namespace Sandbox\Tests\Filters\Actions;
+
 use Sandbox;
 use Sandbox\Tests\Actions\Assets;
 
@@ -31,7 +32,8 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
      */
     function test_add_action_returns_true_on_success()
     {
-        $callback = function () {};
+        $callback = function () {
+        };
         $this->assertTrue(
             Sandbox\Actions::add_action('some_action', $callback)
         );
@@ -47,7 +49,8 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback = function () {};
+        $callback = function () {
+        };
         $expected = [
             'some_action' => [
                 [
@@ -71,8 +74,10 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback1 = function () {};
-        $callback2 = function () {};
+        $callback1 = function () {
+        };
+        $callback2 = function () {
+        };
         $expected = [
             'some_action' => [
                 [
@@ -101,8 +106,10 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback1 = function () {};
-        $callback2 = function () {};
+        $callback1 = function () {
+        };
+        $callback2 = function () {
+        };
         $expected = [
             'some_action' => [
                 [
@@ -146,6 +153,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
                 ],
             ]
         ];
+        //FIXME
         $this->assertSame($expected, $property->getValue());
     }
 
@@ -174,7 +182,8 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
      */
     function test_remove_action_returns_true_on_success()
     {
-        $callback = function () {};
+        $callback = function () {
+        };
         Sandbox\Actions::add_action('some_action', $callback);
 
         $this->assertTrue(
@@ -191,7 +200,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property = $filters->getProperty('actions');
         $property->setAccessible(true);
 
-        $reset_actions = function() use ($property) {
+        $reset_actions = function () use ($property) {
             $property->setValue([]);
         };
         $reset_actions();
@@ -217,8 +226,12 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         /**
          * Test callback is a closure
          */
-        $callback1 = function() { return 1;};
-        $callback2 = function() { return 2;};
+        $callback1 = function () {
+            return 1;
+        };
+        $callback2 = function () {
+            return 2;
+        };
 
         Sandbox\Actions::add_action('some_action', $callback1, 1);
         Sandbox\Actions::add_action('some_action', $callback2, 2);
@@ -232,7 +245,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
                 ]
             ]
         ];
-       // print_r($expected);
+        // print_r($expected);
         $this->assertSame($expected, $property->getValue());
         $reset_actions();
 
@@ -251,5 +264,29 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         ];
         $this->assertSame($expected, $property->getValue());
         $reset_actions();
+    }
+
+    /**
+     *
+     */
+    function test_remove_all_actions_false_on_empty_tag()
+    {
+        $this->assertFalse(
+            Sandbox\Actions::remove_all_actions('')
+        );
+    }
+
+    /**
+     *
+     */
+    function test_remove_all_actions_returns_true_on_success()
+    {
+        $callback = function () {
+        };
+        Sandbox\Actions::add_action('some_action', $callback, 1);
+
+        $this->assertTrue(
+            Sandbox\Actions::remove_all_actions('some_action')
+        );
     }
 }
