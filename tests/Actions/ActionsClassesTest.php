@@ -1,19 +1,15 @@
 <?php
-
 namespace Sandbox\Tests\Actions;
 
 use Sandbox;
-use Sandbox\Tests\Actions\Assets;
-
-require_once dirname(__FILE__) . '/Assets/myCallbackFunctions.php';
+use Sandbox\Tests\Filters\Assets;
 
 /**
  * @since version 1.0
  * @covers Sandbox\Actions
  */
-class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
+class FiltersClassesTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * @param callable $callback
      * @return mixed
@@ -30,14 +26,17 @@ class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::do_action
      */
-    public function test_add_action_works_correct_with_one_actions()
+    public function test_do_action_works_correct_with_one_class_function()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix', 'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_astrix_symbol');
+        $instance = new Sandbox\Tests\Actions\Assets\myMockClass2;
+
+
+        Sandbox\Actions::add_action('echo_astrix', [$instance, 'output_astrix_symbol']);
 
         $expected = '*';
         $output = $this->capture_test_output(
@@ -51,15 +50,18 @@ class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::do_action
      */
-    public function test_add_action_works_correct_with_two_actions()
+    public function test_do_action_works_correct_with_two_class_functions()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix', 'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_astrix_symbol');
-        Sandbox\Actions::add_action('echo_at', 'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_at_symbol');
+        $instance = new Sandbox\Tests\Actions\Assets\myMockClass2;
+
+
+        Sandbox\Actions::add_action('echo_astrix', [$instance, 'output_astrix_symbol']);
+        Sandbox\Actions::add_action('echo_at', [$instance, 'output_at_symbol']);
 
         $expected = '*@';
         $output = $this->capture_test_output(

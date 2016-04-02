@@ -1,17 +1,13 @@
 <?php
-
 namespace Sandbox\Tests\Actions;
 
 use Sandbox;
-use Sandbox\Tests\Actions\Assets;
-
-require_once dirname(__FILE__) . '/Assets/myCallbackFunctions.php';
 
 /**
  * @since version 1.0
  * @covers Sandbox\Actions
  */
-class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
+class ActionsClosuresTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -30,14 +26,16 @@ class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::do_action
      */
-    public function test_add_action_works_correct_with_one_actions()
+    public function test_do_action_works_correct_with_one_closure()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix', 'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_astrix_symbol');
+        Sandbox\Actions::add_action('echo_astrix', function() {
+            echo '*';
+        });
 
         $expected = '*';
         $output = $this->capture_test_output(
@@ -51,15 +49,20 @@ class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::do_action
      */
-    public function test_add_action_works_correct_with_two_actions()
+    public function test_do_action_works_correct_with_two_closures()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix', 'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_astrix_symbol');
-        Sandbox\Actions::add_action('echo_at', 'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_at_symbol');
+        Sandbox\Actions::add_action('echo_astrix', function () {
+            echo '*';
+        });
+
+        Sandbox\Actions::add_action('echo_at', function () {
+            echo '@';
+        });
 
         $expected = '*@';
         $output = $this->capture_test_output(

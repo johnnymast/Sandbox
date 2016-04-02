@@ -7,7 +7,7 @@ use Sandbox;
  * @param string $text
  * @return string
  */
-function my_callback_functions_actions_output_asterix_symbol()
+function my_callback_functions_actions_output_astrix_symbol()
 {
     echo '*';
 }
