@@ -11,12 +11,16 @@ namespace Sandbox\Traits;
 
 trait ArrayFilter
 {
-    public static function filterByPriority(&$items = []) {
+    public static function filterByPriority($items = []) {
+
         usort($items, function ($left, $right) {
+
             if ($left['priority'] === $right['priority']) {
-                return 1;
+                return 0;
             }
+
             return $left['priority'] > $right['priority'] ? 1 : -1;
         });
+        return $items;
     }
 }

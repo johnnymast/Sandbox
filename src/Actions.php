@@ -38,7 +38,7 @@ class Actions
             'priority' => $priority,
         ];
 
-        self::filterByPriority(self::$actions[$tag]);
+        self::$actions[$tag] = self::filterByPriority(self::$actions[$tag]);
         return true;
     }
     

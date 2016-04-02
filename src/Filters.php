@@ -30,7 +30,7 @@ class Filters
             'priority' => $priority,
         ];
 
-        self::filterByPriority(self::$filters[$tag]);
+        self::$filters[$tag] = self::filterByPriority(self::$filters[$tag]);
         return true;
     }
 
