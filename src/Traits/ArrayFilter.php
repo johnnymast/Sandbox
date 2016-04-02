@@ -16,7 +16,7 @@ trait ArrayFilter
             if ($left['priority'] == $right['priority']) {
                 return 0;
             }
-            return ($left['priority'] > $right['priority'] ? 1 : 0);
+            return ($left['priority'] > $right['priority'] ? 1 : -1);
         });
     }
 }
