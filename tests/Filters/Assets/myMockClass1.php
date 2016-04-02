@@ -14,14 +14,25 @@ class myMockClass1
         Sandbox\Filters::add_filter('manipulate_string', [$this, 'append_chars']);
     }
 
+    /**
+     * @param string $text
+     * @return string
+     */
     public function prepend_chars($text='') {
         return '@@'.$text;
     }
 
+    /**
+     * @param string $text
+     * @return string
+     */
     public function append_chars($text='') {
         return $text.'@@';
     }
 
+    /**
+     * @return string
+     */
     public function execute() {
         return Sandbox\Filters::apply_filter('manipulate_string', 'This is a text');
     }

@@ -8,7 +8,7 @@ use Sandbox\Tests\Actions\Assets;
 class ActionsStaticTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     *
+     * @covers Sandbox\Actions::add_action
      */
     function test_add_action_returns_false_on_empty_tag()
     {
@@ -18,7 +18,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::add_action
      */
     function test_add_action_returns_false_on_empty_callback()
     {
@@ -28,19 +28,18 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::add_action
      */
     function test_add_action_returns_true_on_success()
     {
-        $callback = function () {
-        };
+        $callback = function () {};
         $this->assertTrue(
             Sandbox\Actions::add_action('some_action', $callback)
         );
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::add_action
      */
     public function test_add_action_adds_action()
     {
@@ -65,7 +64,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::add_action
      */
     public function test_add_action_adds_multiple_filters()
     {
@@ -97,7 +96,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::add_action
      */
     public function test_add_action_arranges_priority_correct()
     {
@@ -130,7 +129,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::add_action
      */
     public function test_add_action_in_class_method_has_the_correct_callback()
     {
@@ -158,7 +157,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::remove_action
      */
     function test_remove_action_returns_false_on_empty_tag()
     {
@@ -168,7 +167,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::remove_action
      */
     function test_remove_action_returns_false_on_empty_callback()
     {
@@ -178,7 +177,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::remove_action
      */
     function test_remove_action_returns_true_on_success()
     {
@@ -192,7 +191,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::remove_action
      */
     function test_remove_action_removes_the_action_correctly()
     {
@@ -267,7 +266,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::remove_all_actions
      */
     function test_remove_all_actions_false_on_empty_tag()
     {
@@ -277,7 +276,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Actions::remove_all_actions
      */
     function test_remove_all_actions_returns_true_on_success()
     {

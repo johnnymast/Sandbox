@@ -19,6 +19,12 @@ class Actions
     private static $actions = [];
 
 
+    /**
+     * @param string $tag
+     * @param string $callback
+     * @param int $priority
+     * @return bool
+     */
     public static function add_action($tag = '', $callback = '', $priority = 10)
     {
         if (empty($tag) || empty($callback))

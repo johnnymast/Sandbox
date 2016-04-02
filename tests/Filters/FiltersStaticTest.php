@@ -11,7 +11,7 @@ use Sandbox\Tests\Filters\Assets;
 class FiltersStaticTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     *
+     * @covers Sandbox\Filters::add_filter
      */
     function test_add_filter_returns_false_on_empty_tag()
     {
@@ -21,7 +21,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::add_filter
      */
     function test_add_filter_returns_false_on_empty_callback()
     {
@@ -31,7 +31,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::add_filter
      */
     function test_add_filter_returns_true_on_success()
     {
@@ -42,7 +42,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::add_filter
      */
     public function test_add_filter_adds_filter()
     {
@@ -66,7 +66,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::add_filter
      */
     public function test_add_filter_adds_multiple_filters()
     {
@@ -96,7 +96,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::add_filter
      */
     public function test_add_filter_arranges_priority_correct()
     {
@@ -127,7 +127,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::add_filter
      */
     public function test_add_filter_in_class_method_has_the_correct_callback()
     {
@@ -155,7 +155,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::remove_filter
      */
     function test_remove_filter_returns_false_on_empty_tag()
     {
@@ -165,7 +165,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::remove_filter
      */
     function test_remove_filter_returns_false_on_empty_callback()
     {
@@ -175,7 +175,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::remove_filter
      */
     function test_remove_filter_returns_true_on_success()
     {
@@ -188,7 +188,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::remove_filter
      */
     function test_remove_filter_removes_the_filter_correctly()
     {
@@ -257,7 +257,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::remove_all_filters
      */
     function test_remove_all_filters_false_on_empty_tag()
     {
@@ -267,7 +267,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     *
+     * @covers Sandbox\Filters::remove_all_filters
      */
     function test_remove_all_filters_returns_true_on_success()
     {
