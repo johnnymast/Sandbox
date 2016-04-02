@@ -17,14 +17,19 @@ class Actions
      * @var array
      */
     private static $actions = [];
-    
+
+
     /**
      * @param string $tag
      * @param string $callback
      * @param int $priority
+     * @return bool
      */
     public static function add_action($tag = '', $callback = '', $priority = 10)
     {
+        if (empty($tag) || empty($callback))
+            return false;
+
         if (isset(self::$actions[$tag]) === false) {
             self::$actions[$tag] = [];
         }
@@ -34,9 +39,9 @@ class Actions
         ];
 
         self::filterByPriority(self::$actions[$tag]);
+        return true;
     }
-
-
+    
     /**
      * @param string $action
      * @param string $value
@@ -52,6 +57,35 @@ class Actions
             $value = self::execute_action($action, $value);
         }
         return $value;
+    }
+
+
+    /**
+     * @param string $tag
+     * @param string $callback
+     * @return bool
+     */
+    static public function remove_action($tag = '', $callback = '')
+    {
+        if (empty($tag) || empty($callback))
+            return false;
+
+        if (isset(self::$actions[$tag]) === true) {
+            $data = array();
+            $found = false;
+
+            foreach (self::$actions[$tag] as $item) {
+                if ($item['callback'] == $callback) {
+                    $found = true;
+                } else {
+                    $data[] = $item;
+                }
+            }
+
+            self::$actions[$tag] = $data;
+            return $found;
+        }
+        return false;
     }
 
     /**
@@ -75,7 +109,7 @@ class Actions
 
         } while (next(self::$actions[$tag]));
 
-
+        // fixme
         return $value;
     }
 

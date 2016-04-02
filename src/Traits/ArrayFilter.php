@@ -13,8 +13,8 @@ trait ArrayFilter
 {
     public static function filterByPriority(&$items = []) {
         usort($items, function ($left, $right) {
-            if ($left['priority'] == $right['priority']) {
-                return 0;
+            if ($left['priority'] === $right['priority']) {
+                return 1;
             }
             return $left['priority'] > $right['priority'] ? 1 : -1;
         });

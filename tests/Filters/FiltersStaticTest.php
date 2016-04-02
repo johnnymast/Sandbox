@@ -138,19 +138,19 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
 
         $instance = new Sandbox\Tests\Filters\Assets\myMockClass1;
 
-        $testagaints = [
+        $expected = [
             'manipulate_string' => [
-                [
-                    'callback' => [$instance, 'append_chars'],
-                    'priority' => 10,
-                ],
                 [
                     'callback' => [$instance, 'prepend_chars'],
                     'priority' => 10,
                 ],
+                [
+                    'callback' => [$instance, 'append_chars'],
+                    'priority' => 10,
+                ],
             ]
         ];
-        $this->assertEquals($testagaints, $property->getValue());
+        $this->assertEquals($expected, $property->getValue());
     }
 
     /**
