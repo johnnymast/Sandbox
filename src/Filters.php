@@ -28,6 +28,12 @@ class Filters
         self::$annotaion_handler->read($object);
     }
 
+    static public function debug() {
+        print '<pre>';
+        print_r(self::$filters);
+        print '</pre>';
+    }
+    
     /**
      * @param string $tag
      * @param string $callback

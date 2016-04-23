@@ -7,7 +7,7 @@ ini_set('display_errors', true);
 class Test
 {
     /**
-     * @Filter("name", dataType="string")
+     * @Filter("prepend_at", priority=1)
      * @param string $text
      * @return string
      */
@@ -15,8 +15,18 @@ class Test
     {
         return '@' . $text;
     }
+
+    /**
+     * @Filter("prepend_at", priority=2)
+     * @param string $text
+     * @return string
+     */
+    public function prepend_at_second($text = '')
+    {
+        return '!!' . $text;
+    }
 }
 Sandbox\Filters::register_filter_object(new Test());
 
-e
-cho "KLAAR\n";
+echo "Result ".Sandbox\Filters::apply_filter('prepend_at', 'Hello world');
+echo "KLAAR\n";

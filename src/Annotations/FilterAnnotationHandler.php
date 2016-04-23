@@ -7,8 +7,9 @@
  */
 
 namespace Sandbox\Annotations;
-
 use Doctrine\Common\Annotations\Reader;
+use Sandbox;
+
 
 class FilterAnnotationHandler
 {
@@ -29,16 +30,27 @@ class FilterAnnotationHandler
 
 
         foreach ($reflectionObject->getMethods() as $reflectionMethod) {
-            // fetch the @StandardObject annotation from the annotation reader
-            $x = new $this->annotationClass;
-            print_r($reflectionMethod);
-            // exit;
+////            // fetch the @StandardObject annotation from the annotation reader
+//            $x = new $this->annotationClass;
+//
+//            $annotation = $this->reader->getMethodAnnotation($reflectionMethod, $this->annotationClass);
+////  //          Sandbox\Filters::add_filter($annotation->getPropertyName(), [$reflectionMethod->class, $reflectionMethod->name]);
+//            Sandbox\Filters::add_filter($annotation->getPropertyName(), [$x, $reflectionMethod->getName()]);
+////            print_r($annotation);
+//           // exit;
+            $loader = new $this->annotationClass; $loader;
 
             $annotation = $this->reader->getMethodAnnotation($reflectionMethod, $this->annotationClass);
-            add_filter()
-            print_r($annotation);
-            exit;
 
+            print '<pre>';
+            print_r($annotation->priority);
+            print '</pre>';
+            /**
+             * Autoload or instantiate the object
+             */
+
+            $annotation = $this->reader->getMethodAnnotation($reflectionMethod, $this->annotationClass);
+            Sandbox\Filters::add_filter($annotation->getPropertyName(), [$object, $reflectionMethod->getName()], $annotation->priority);
         }
 
     }
