@@ -42,14 +42,14 @@ class FilterAnnotationHandler
 
             $annotation = $this->reader->getMethodAnnotation($reflectionMethod, $this->annotationClass);
 
-            print '<pre>';
-            print_r($annotation->priority);
-            print '</pre>';
             /**
              * Autoload or instantiate the object
              */
 
             $annotation = $this->reader->getMethodAnnotation($reflectionMethod, $this->annotationClass);
+
+            print_r('setting prio '.$annotation->priority.' on '.$reflectionMethod->getName())."\n";
+
             Sandbox\Filters::add_filter($annotation->getPropertyName(), [$object, $reflectionMethod->getName()], $annotation->priority);
         }
 

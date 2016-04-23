@@ -44,7 +44,7 @@ class Filter
             $option = substr(3, $name);
             $option = strtolower($option);
 
-            
+
 
 
         } else {

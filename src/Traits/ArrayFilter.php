@@ -13,10 +13,17 @@ trait ArrayFilter
 {
     public static function filterByPriority(&$items = []) {
         usort($items, function ($left, $right) {
-            if ($left['priority'] == $right['priority']) {
-                return 0;
+            echo 'Checking: '.$left['priority'].' vs '.$right['priority']."\n";
+
+            if ($left['priority'] === $right['priority']) {
+                return 1;
             }
-            return ($left['priority'] > $right['priority'] ? 1 : -1);
+
+            if ($left['priority'] <= $right['priority']) {
+                echo "LINKS\n";
+                return 1;
+            }
+            return (((int)$left['priority'] > (int)$right['priority']) ? 1 : 0);
         });
     }
 }
