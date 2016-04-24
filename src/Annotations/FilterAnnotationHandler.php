@@ -48,7 +48,7 @@ class FilterAnnotationHandler
 
             $annotation = $this->reader->getMethodAnnotation($reflectionMethod, $this->annotationClass);
 
-            print_r('setting prio '.$annotation->priority.' on '.$reflectionMethod->getName())."\n";
+        //    print_r('setting prio '.$annotation->priority.' on '.$reflectionMethod->getName())."\n";
 
             Sandbox\Filters::add_filter($annotation->getPropertyName(), [$object, $reflectionMethod->getName()], $annotation->priority);
         }

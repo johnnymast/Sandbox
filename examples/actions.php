@@ -1,6 +1,7 @@
 <?php
 require 'autoload.php';
 
+//FIXME: rename file
 function func_hello_world($text) {
     echo $text."\n";
 }

@@ -28,12 +28,6 @@ class Filters
         self::$annotaion_handler->read($object);
     }
 
-    static public function debug() {
-        print '<pre>';
-        print_r(self::$filters);
-        print '</pre>';
-    }
-    
     /**
      * @param string $tag
      * @param string $callback
@@ -53,7 +47,10 @@ class Filters
             'priority' => $priority,
         ];
 
-        self::filterByPriority(self::$filters[$tag]);
+        self::$filters[$tag]  =self::filterByPriority(self::$filters[$tag]);
+
+       // reset( self::$filters[$tag] );
+
         return true;
     }
 
