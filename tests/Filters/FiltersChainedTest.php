@@ -2,7 +2,6 @@
 namespace Sandbox\Tests\Filters;
 
 use Sandbox;
-use Sandbox\Tests\Filters\Assets;
 
 /**
  * @since version 1.0

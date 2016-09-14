@@ -2,7 +2,6 @@
 namespace Sandbox\Tests\Actions;
 
 use Sandbox;
-use Sandbox\Tests\Actions\Assets;
 
 /**
  * @since version 1.0

@@ -38,21 +38,6 @@ class Filter
         $this->options = $options;
     }
 
-    function __call($name, $arguments)
-    {
-        if (substr($name, 0, 3) == 'get') {
-            $option = substr(3, $name);
-            $option = strtolower($option);
-
-
-
-
-        } else {
-            throw new \Exception($name. " was undefined");
-        }
-    }
-
-
     public function getPropertyName()
     {
         return $this->propertyName;

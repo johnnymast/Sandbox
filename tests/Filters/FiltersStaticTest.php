@@ -122,7 +122,6 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
 
         Sandbox\Filters::add_filter('test_add_filter_arranges_priority_correct', $callback1, 1);
         Sandbox\Filters::add_filter('test_add_filter_arranges_priority_correct', $callback2, 0);
-        $x = $property->getValue();
 
         $this->assertSame($expected['test_add_filter_arranges_priority_correct'][1]['priority'], $property->getValue()['test_add_filter_arranges_priority_correct'][0]['priority']);
     }
@@ -151,9 +150,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
                 ],
             ]
         ];
-        $x = $property->getValue();
-        // FIXME
-       // $this->assertSame($expected, $property->getValue());
+       $this->assertSame($expected, $property->getValue());
     }
 
     /**

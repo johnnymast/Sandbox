@@ -3,7 +3,6 @@
 namespace Sandbox\Tests\Actions;
 
 use Sandbox;
-use Sandbox\Tests\Actions\Assets;
 
 require_once dirname(__FILE__) . '/Assets/myCallbackFunctions.php';
 

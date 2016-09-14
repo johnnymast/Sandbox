@@ -2,7 +2,6 @@
 namespace Sandbox\Tests\Filters;
 
 use Sandbox;
-use Sandbox\Tests\Filters\Assets;
 
 require_once dirname(__FILE__) . '/Assets/myCallbackFunctions.php';
 

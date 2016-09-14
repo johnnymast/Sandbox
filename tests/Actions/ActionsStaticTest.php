@@ -109,9 +109,8 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
 
         Sandbox\Actions::add_action('some_action', $callback1, 10);
         Sandbox\Actions::add_action('some_action', $callback2, 10);
-      //  $x = $property->getValue();
-      //  $real = Sandbox\Actions::$actions;
-  //      $this->assertSame($expected, $property->getValue());
+
+        $this->assertSame($expected, $property->getValue());
     }
 
     /**
@@ -142,13 +141,10 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         ];
       //  $this->expectOutputString(''); // tell PHPUnit to expect '' as output
 
-        echo "START\n";
         Sandbox\Actions::add_action('some_action', $callback1, 1);
         Sandbox\Actions::add_action('some_action', $callback2, 0);
-//        $x = Sandbox\Actions::$actions['some_action'];
 
-        print_r('priority == '.$property->getValue()['some_action'][0]['priority']);
-      //  $this->assertSame($expected['some_action'][1], $property->getValue()['some_action'][0]);
+        $this->assertSame($expected['some_action'][1], $property->getValue()['some_action'][0]);
 
     }
 

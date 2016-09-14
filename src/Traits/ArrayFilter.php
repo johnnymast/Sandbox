@@ -1,20 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: developer
- * Date: 30-03-16
- * Time: 21:17
- */
 
 namespace Sandbox\Traits;
 
-function build_sorter($key) {
-    return function ($a, $b) use ($key) {
-        return strnatcmp($a[$key], $b[$key]);
-    };
-}
-
-function multiSort() {
+function multiSort ()
+{
     //get args of the function
     $args = func_get_args();
     $c = count($args);
@@ -25,14 +14,13 @@ function multiSort() {
     $array = array_splice($args, 0, 1);
     $array = $array[0];
     //sort with an anoymous function using args
-    usort($array, function($a, $b) use($args) {
+    usort($array, function ($a, $b) use ($args) {
 
         $i = 0;
         $c = count($args);
         $cmp = 0;
-        while($cmp == 0 && $i < $c)
-        {
-            $cmp = strcmp($a[ $args[ $i ] ], $b[ $args[ $i ] ]);
+        while ($cmp == 0 && $i < $c) {
+            $cmp = strcmp($a[$args[$i]], $b[$args[$i]]);
             $i++;
         }
 
@@ -43,81 +31,18 @@ function multiSort() {
     return $array;
 
 }
+
 trait ArrayFilter
 {
 
-
-
-
-    // FIXME: Remove tag
-    public static function filterByPriority(&$items = [], $tag='') {
-        $items = multiSort($items, 'priority');
-        return;
-        return usort($items, multiSort('priority'));
-        usort($items, function ($left, $right) {
-            var_dump($left['priority']);
-            echo "\n";
-            var_dump($right['priority']);
-
-            if ($left['priority'] === $right['priority']) {
-                return 0;
-            }
-            return $left['priority'] >  $right['priority'] ? -1 : 1;
-        });
-        return;
+    public static function filterByPriority (&$items = [])
+    {
         /**
          * PHP Bug #70289 (https://bugs.php.net/bug.php?id=70289)
          * I had to write my own custom usort because on HHVM and PHP7+ usort will put equal priority
          * values on an earlier index while php 5 does the opposite of this. The PHP core team says its not
          * a bug but i find this a huge bug because i could not rely on the usort() function anymore.
          */
-
-        $new = [];
-        $num = count($items);
-        $verbose = false;
-
-        if ($tag == 'test_add_filter_arranges_priority_correct' || $tag == 'prepend_at')
-            $verbose = true;
-
-        // equal set right before left
-        // left gt right left first then right
-        // right gt left first right then left
-        // right et left left first then right
-
-        /**
-         * Keep in mind the order as ascending
-         */
-        if ($num > 1) {
-            for ($i = 0; $i < $num; $i ++) {
-                $left = $items[$i];
-
-                if (isset($items[$i + 1]) == false) {
-                    continue;
-                }
-
-                $right = $items[$i + 1];
-
-                if ($left['priority'] === $right['priority']) {
-                    if ($verbose == true) fwrite(STDERR, print_r("left (" . $left['priority'] . ") is same priority as right (" . $right['priority'] . "), keeping the same\n"));
-                    $new[] = $right;
-                    $new[] = $left;
-                } elseif ($left['priority'] < $right['priority']) {
-                    if ($verbose == true) fwrite(STDERR, print_r("left (" . $left['priority'] . ") is lower priority than right (" . $right['priority'] . "), moving right up array\n"));
-                    $new[] = $right;
-                    $new[] = $left;
-                } elseif($left['priority'] > $right['priority']) {
-                    if ($verbose == true) fwrite(STDERR, print_r("left (" . $left['priority'] . ") is higher priority than right (" . $right['priority'] . "), moving left down array\n"));
-                    $new[] = $right;
-                    $new[] = $left;
-                } elseif($right['priority'] > $left['priority']) {
-                    if ($verbose == true) fwrite(STDERR, print_r("right (" . $right['priority'] . ") is higher priority than left (" . $left['priority'] . "), moving left up array\n"));
-
-                    $new[] = $left;
-                    $new[] = $right;
-
-                }
-            }
-            $items = $new;
-        }
+        $items = multiSort($items, 'priority');
     }
 }

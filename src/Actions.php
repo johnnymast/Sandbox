@@ -18,7 +18,6 @@ class Actions
      */
     private static $actions = [];
 
-
     /**
      * @param string $tag
      * @param string $callback
@@ -39,6 +38,7 @@ class Actions
         ];
 
         self::filterByPriority(self::$actions[$tag]);
+
         return true;
     }
 
@@ -80,7 +80,6 @@ class Actions
 
         } while (next(self::$actions[$tag]));
 
-        // FIXME
         return $value;
     }
 
