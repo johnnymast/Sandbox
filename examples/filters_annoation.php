@@ -7,7 +7,7 @@ ini_set('display_errors', true);
 class Test
 {
     /**
-     * @Filter("prepend_at", priority=2)
+     * @Filter("prepend_at", priority=1)
      * @param string $text
      * @return string
      */
@@ -17,7 +17,7 @@ class Test
     }
 
     /**
-     * @Filter("prepend_at", priority=2)
+     * @Filter("prepend_at", priority=0)
      * @param string $text
      * @return string
      */

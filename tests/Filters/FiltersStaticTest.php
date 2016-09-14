@@ -108,7 +108,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $callback1 = function () {};
         $callback2 = function () {};
         $expected = [
-            'new_filter' => [
+            'test_add_filter_arranges_priority_correct' => [
                 [
                     'callback' => $callback1,
                     'priority' => 1,
@@ -120,10 +120,11 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-        Sandbox\Filters::add_filter('new_filter', $callback1, 1);
-        Sandbox\Filters::add_filter('new_filter', $callback2, 0);
+        Sandbox\Filters::add_filter('test_add_filter_arranges_priority_correct', $callback1, 1);
+        Sandbox\Filters::add_filter('test_add_filter_arranges_priority_correct', $callback2, 0);
+        $x = $property->getValue();
 
-        $this->assertSame($expected['new_filter'][1], $property->getValue()['new_filter'][0]);
+        $this->assertSame($expected['test_add_filter_arranges_priority_correct'][1]['priority'], $property->getValue()['test_add_filter_arranges_priority_correct'][0]['priority']);
     }
 
     /**

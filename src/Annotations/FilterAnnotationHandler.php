@@ -30,27 +30,17 @@ class FilterAnnotationHandler
 
 
         foreach ($reflectionObject->getMethods() as $reflectionMethod) {
-////            // fetch the @StandardObject annotation from the annotation reader
-//            $x = new $this->annotationClass;
-//
-//            $annotation = $this->reader->getMethodAnnotation($reflectionMethod, $this->annotationClass);
-////  //          Sandbox\Filters::add_filter($annotation->getPropertyName(), [$reflectionMethod->class, $reflectionMethod->name]);
-//            Sandbox\Filters::add_filter($annotation->getPropertyName(), [$x, $reflectionMethod->getName()]);
-////            print_r($annotation);
-//           // exit;
-            $loader = new $this->annotationClass; $loader;
 
-            $annotation = $this->reader->getMethodAnnotation($reflectionMethod, $this->annotationClass);
+            /**
+             * Weird but still be need to do this.
+             */
+            $loader = new $this->annotationClass; $loader;
 
             /**
              * Autoload or instantiate the object
              */
-
             $annotation = $this->reader->getMethodAnnotation($reflectionMethod, $this->annotationClass);
-
-        //    print_r('setting prio '.$annotation->priority.' on '.$reflectionMethod->getName())."\n";
-
-            Sandbox\Filters::add_filter($annotation->getPropertyName(), [$object, $reflectionMethod->getName()], $annotation->priority);
+            Sandbox\Filters::add_filter($annotation->getPropertyName(), [$object, $reflectionMethod->name], $annotation->priority);
         }
 
     }
