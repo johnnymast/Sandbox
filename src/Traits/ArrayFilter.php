@@ -12,7 +12,7 @@ trait ArrayFilter
 
 
 
-    private function multiSort() {
+    private static function multiSort() {
         //get args of the function
         $args = func_get_args();
         $c = count($args);
@@ -33,13 +33,9 @@ trait ArrayFilter
                 $cmp = strcmp($a[ $args[ $i ] ], $b[ $args[ $i ] ]);
                 $i++;
             }
-
             return $cmp;
-
         });
-
         return $array;
-
     }
 
 
@@ -52,7 +48,7 @@ trait ArrayFilter
          * a bug but i find this a huge bug because i could not rely on the usort() function anymore.
          */
 
-        $items = $this->multiSort($items, 'priority');
+        $items = self::multiSort($items, 'priority');
         return;
         return usort($items, multiSort('priority'));
         usort($items, function ($left, $right) {
