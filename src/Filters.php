@@ -1,6 +1,7 @@
 <?php
 namespace Sandbox;
 use Doctrine\Common\Annotations\AnnotationReader;
+
 class Filters
 {
     use Traits\ArrayFilter;
@@ -16,6 +17,9 @@ class Filters
     static private $annotaion_handler = null;
 
 
+    /**
+     *
+     */
     static public function init() {
         if (!self::$annotaion_handler) {
             $reader = new AnnotationReader();
@@ -23,6 +27,9 @@ class Filters
         }
     }
 
+    /**
+     * @param $object
+     */
     static public function register_filter_object($object) {
         self::init();
         self::$annotaion_handler->read($object);

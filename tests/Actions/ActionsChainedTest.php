@@ -1,7 +1,7 @@
 <?php
 namespace Sandbox\Tests\Actions;
 
-use Sandbox;
+use Sandbox\Actions;
 
 /**
  * @since version 1.0
