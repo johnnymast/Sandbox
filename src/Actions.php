@@ -12,6 +12,29 @@ class Actions
     private static $actions = [];
 
     /**
+     * @return Actions
+     */
+    public static function get_instance()
+    {
+        static $inst = null;
+        if ($inst === null) {
+            $inst = new Actions();
+        }
+        return $inst;
+    }
+
+    public static function getActions() {
+        return self::$actions;
+    }
+
+
+
+    public static function cleanup() {
+        //unset(self::$actions);
+       self::$actions = [];
+    }
+
+    /**
      * @param string $tag
      * @param string $callback
      * @param int $priority
@@ -19,8 +42,9 @@ class Actions
      */
     public static function add_action($tag = '', $callback = '', $priority = 10)
     {
-        if (empty($tag) || empty($callback))
+        if (empty($tag) || empty($callback)) {
             return false;
+        }
 
         if (isset(self::$actions[$tag]) === false) {
             self::$actions[$tag] = [];
@@ -59,8 +83,9 @@ class Actions
      */
     private static function execute_action($tag, $value = '')
     {
-        if (isset(self::$actions[$tag]) === false)
+        if (isset(self::$actions[$tag]) === false) {
             return $value;
+        }
 
         reset(self::$actions[$tag]);
 
@@ -68,8 +93,9 @@ class Actions
 
             $entry = current(self::$actions[$tag]);
 
-            if (is_callable($entry['callback']))
+            if (is_callable($entry['callback'])) {
                 call_user_func($entry['callback'], $value);
+            }
 
         } while (next(self::$actions[$tag]));
 
@@ -83,8 +109,9 @@ class Actions
      */
     static public function remove_action($tag = '', $callback = '')
     {
-        if (empty($tag) || empty($callback))
+        if (empty($tag) || empty($callback)) {
             return false;
+        }
 
         if (isset(self::$actions[$tag]) === true) {
             $data = array();
@@ -110,8 +137,9 @@ class Actions
      */
     static public function remove_all_actions($tag = '')
     {
-        if (empty($tag))
+        if (empty($tag)) {
             return false;
+        }
 
         if (isset(self::$actions[$tag])) {
             unset(self::$actions[$tag]);

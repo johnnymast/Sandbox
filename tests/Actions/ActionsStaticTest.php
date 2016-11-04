@@ -4,6 +4,7 @@ namespace Sandbox\Tests\Actions;
 
 use Sandbox;
 use Sandbox\Tests\Actions\Assets;
+use SebastianBergmann\PeekAndPoke\Proxy as Proxy;
 
 class ActionsStaticTest extends \PHPUnit_Framework_TestCase
 {
@@ -83,10 +84,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
      */
     public function test_add_action_adds_multiple_actions()
     {
-        $actions = new \ReflectionClass('Sandbox\Actions');
-        $property = $actions->getProperty('actions');
-        $property->setAccessible(true);
-        $property->setValue([]);
+        Sandbox\Actions::cleanup();
 
         $callback1 = function () {
             return 'callback1';
@@ -110,7 +108,8 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         Sandbox\Actions::add_action('some_action', $callback1, 10);
         Sandbox\Actions::add_action('some_action', $callback2, 10);
 
-        $this->assertSame($expected, $property->getValue());
+        $got = Sandbox\Actions::getActions();
+        $this->assertSame($expected, $got);
     }
 
     /**
@@ -123,10 +122,8 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback1 = function () {
-        };
-        $callback2 = function () {
-        };
+        $callback1 = function () {};
+        $callback2 = function () {};
         $expected = [
             'some_action' => [
                 [
