@@ -6,39 +6,41 @@ namespace Sandbox\Traits;
 // TODO: EWW Get this into a file ..
 
 
-function multiSort() {
-    //get args of the function
-    $args = func_get_args();
-    $c = count($args);
-    if ($c < 2) {
-        return false;
-    }
-    //get the array to sort
-    $array = array_splice($args, 0, 1);
-    $array = $array[0];
-    //sort with an anoymous function using args
-    usort($array, function($a, $b) use($args) {
 
-        $i = 0;
-        $c = count($args);
-        $cmp = 0;
-        while($cmp == 0 && $i < $c)
-        {
-            $cmp = strcmp($a[ $args[ $i ] ], $b[ $args[ $i ] ]);
-            $i++;
-        }
-
-        return $cmp;
-
-    });
-
-    return $array;
-
-}
 trait ArrayFilter
 {
 
 
+
+    private function multiSort() {
+        //get args of the function
+        $args = func_get_args();
+        $c = count($args);
+        if ($c < 2) {
+            return false;
+        }
+        //get the array to sort
+        $array = array_splice($args, 0, 1);
+        $array = $array[0];
+        //sort with an anoymous function using args
+        usort($array, function($a, $b) use($args) {
+
+            $i = 0;
+            $c = count($args);
+            $cmp = 0;
+            while($cmp == 0 && $i < $c)
+            {
+                $cmp = strcmp($a[ $args[ $i ] ], $b[ $args[ $i ] ]);
+                $i++;
+            }
+
+            return $cmp;
+
+        });
+
+        return $array;
+
+    }
 
 
     // FIXME: Remove tag
@@ -50,7 +52,7 @@ trait ArrayFilter
          * a bug but i find this a huge bug because i could not rely on the usort() function anymore.
          */
 
-        $items = multiSort($items, 'priority');
+        $items = $this->multiSort($items, 'priority');
         return;
         return usort($items, multiSort('priority'));
         usort($items, function ($left, $right) {
