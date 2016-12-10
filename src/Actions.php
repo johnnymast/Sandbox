@@ -47,14 +47,10 @@ class Actions
         }
 
         if (isset(self::$actions[$tag]) === false) {
-            self::$actions[$tag] = [];
+            self::$actions[$tag] = new Hook($tag);
         }
-        self::$actions[$tag][] = [
-            'callback' => $callback,
-            'priority' => $priority,
-        ];
 
-        self::filterByPriority(self::$actions[$tag]);
+        self::$actions[$tag]->addHook($priority, $callback);
 
         return true;
     }
@@ -87,18 +83,18 @@ class Actions
             return $value;
         }
 
+        $hooks = self::$actions[$tag]->getHooks();
         reset(self::$actions[$tag]);
 
-        do {
+        foreach($hooks as $priority => $callbacks) {
+            do {
 
-            $entry = current(self::$actions[$tag]);
+                $entry = current($callbacks);
+                if (is_callable($entry['callback']))
+                    $value = call_user_func($entry['callback'], $value);
 
-            if (is_callable($entry['callback'])) {
-                call_user_func($entry['callback'], $value);
-            }
-
-        } while (next(self::$actions[$tag]));
-
+            } while (next($callbacks));
+        }
         return $value;
     }
 
@@ -109,23 +105,21 @@ class Actions
      */
     static public function remove_action($tag = '', $callback = '')
     {
-        if (empty($tag) || empty($callback)) {
-            return false;
-        }
+        if (empty($tag) || empty($callback))
+        return false;
 
         if (isset(self::$actions[$tag]) === true) {
-            $data = array();
             $found = false;
+            $hooks = self::$actions[$tag]->getHooks();
 
-            foreach (self::$actions[$tag] as $item) {
-                if ($item['callback'] == $callback) {
-                    $found = true;
-                } else {
-                    $data[] = $item;
+            foreach($hooks as $priority => $callbacks) {
+                foreach($callbacks as $entry) {
+                    if ($entry['callback'] == $callback) {
+                        self::$actions[$tag]->removeCallbackWithPriority($priority, $callback);
+                        $found = true;
+                    }
                 }
             }
-
-            self::$actions[$tag] = $data;
             return $found;
         }
         return false;
@@ -142,6 +136,7 @@ class Actions
         }
 
         if (isset(self::$actions[$tag])) {
+            self::$actions[$tag]->removeAllHooks();
             unset(self::$actions[$tag]);
             return true;
         }

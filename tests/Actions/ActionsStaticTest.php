@@ -64,19 +64,20 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback = function () {
-        };
-        $expected = [
-            'some_action' => [
-                [
-                    'callback' => $callback,
-                    'priority' => 10,
-                ]
-            ]
-        ];
 
-        Sandbox\Actions::add_action('some_action', $callback);
-        $this->assertEquals($expected, $property->getValue());
+        $callback = function () {};
+
+        $tag  = 'new_filter';
+        $priority = 10;
+
+        $hook = new Sandbox\Hook($tag);
+        $hook->addHook($priority, $callback);
+
+        Sandbox\Actions::add_action($tag, $callback);
+
+        $actual = $property->getValue()[$tag];
+        $expected = $hook;
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -84,32 +85,27 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
      */
     public function test_add_action_adds_multiple_actions()
     {
-        Sandbox\Actions::cleanup();
+        $filters = new \ReflectionClass('Sandbox\Actions');
+        $property = $filters->getProperty('actions');
+        $property->setAccessible(true);
+        $property->setValue([]);
 
-        $callback1 = function () {
-            return 'callback1';
-        };
-        $callback2 = function () {
-            return 'callback1';
-        };
-        $expected = [
-            'some_action' => [
-                [
-                    'callback' => $callback1,
-                    'priority' => 10,
-                ],
-                [
-                    'callback' => $callback2,
-                    'priority' => 10,
-                ],
-            ]
-        ];
+        $callback1 = function () {};
+        $callback2 = function () {};
 
-        Sandbox\Actions::add_action('some_action', $callback1, 10);
-        Sandbox\Actions::add_action('some_action', $callback2, 10);
+        $tag = 'new_action';
+        $priority = 10;
 
-        $got = Sandbox\Actions::getActions();
-        $this->assertSame($expected, $got);
+        $hook = new Sandbox\Hook($tag);
+        $hook->addHook($priority, $callback1);
+        $hook->addHook($priority, $callback2);
+
+        Sandbox\Actions::add_action($tag, $callback1);
+        Sandbox\Actions::add_action($tag, $callback2);
+
+        $actual = $property->getValue()[$tag];
+        $expected = $hook;
+        $this->assertEquals($expected, $actual);
     }
 
     /**
@@ -124,24 +120,20 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
 
         $callback1 = function () {};
         $callback2 = function () {};
-        $expected = [
-            'some_action' => [
-                [
-                    'callback' => $callback1,
-                    'priority' => 1,
-                ],
-                [
-                    'callback' => $callback2,
-                    'priority' => 0,
-                ],
-            ]
-        ];
-      //  $this->expectOutputString(''); // tell PHPUnit to expect '' as output
 
-        Sandbox\Actions::add_action('some_action', $callback1, 1);
-        Sandbox\Actions::add_action('some_action', $callback2, 0);
+        $tag = 'test_add_action_arranges_priority_correct';
 
-        $this->assertSame($expected['some_action'][1], $property->getValue()['some_action'][0]);
+        $hook = new Sandbox\Hook($tag);
+        $hook->addHook(1, $callback1);
+        $hook->addHook(0, $callback2);
+
+        Sandbox\Actions::add_action($tag, $callback1, 1);
+        Sandbox\Actions::add_action($tag, $callback2, 0);
+
+        $actual = $property->getValue()[$tag]->getHooks()[0][0];
+        $expected = $hook->getHooks()[0][0];
+
+        $this->assertSame($expected, $actual);
 
     }
 
@@ -221,64 +213,57 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         };
         $reset_actions();
 
+        $tag = 'some_action';
+
         /**
          * Test callback is a string
          */
-        Sandbox\Actions::add_action('some_action', 'callback1', 1);
-        Sandbox\Actions::add_action('some_action', 'callback2', 2);
-        Sandbox\Actions::remove_action('some_action', 'callback1');
+        Sandbox\Actions::add_action($tag, 'callback1', 1);
+        Sandbox\Actions::add_action($tag, 'callback2', 2);
+        Sandbox\Actions::remove_action($tag, 'callback1');
 
-        $expected = [
-            'some_action' => [
-                [
-                    'callback' => 'callback2',
-                    'priority' => 2
-                ]
-            ]
-        ];
-        $this->assertSame($expected, $property->getValue());
+        $hook = new Sandbox\Hook($tag);
+        $hook->addHook(2, 'callback2');
+
+        $expected = $hook;
+        $actual = $property->getValue()[$tag];
+
+        $this->assertEquals($expected, $actual);
         $reset_actions();
 
         /**
          * Test callback is a closure
          */
-        $callback1 = function () {
-            return 1;
-        };
-        $callback2 = function () {
-            return 2;
-        };
 
-        Sandbox\Actions::add_action('some_action', $callback1, 1);
-        Sandbox\Actions::add_action('some_action', $callback2, 2);
-        Sandbox\Actions::remove_action('some_action', $callback1);
+        $callback1 = function () {};
+        $callback2 = function () {};
+        Sandbox\Actions::add_action($tag, $callback1, 1);
+        Sandbox\Actions::add_action($tag, $callback2, 2);
+        Sandbox\Actions::remove_action($tag, $callback1);
 
-        $expected = [
-            'some_action' => [
-                [
-                    'callback' => $callback2, // FIXME: SHOULD FAIL
-                    'priority' => 2
-                ]
-            ]
-        ];
-        // print_r($expected);
-        $this->assertSame($expected, $property->getValue());
+        $hook = new Sandbox\Hook($tag);
+        $hook->addHook(2, $callback2);
+
+        $expected = $hook;
+        $actual = $property->getValue()[$tag];
+
+        $this->assertEquals($expected, $actual);
         $reset_actions();
 
         /**
          * Test callback is inside a class
          */
+        $tag = 'do_some_things';
         $instance = new Sandbox\Tests\Actions\Assets\myMockClass1;
-        Sandbox\Actions::remove_action('do_some_things', [$instance, 'first_function']);
-        $expected = [
-            'do_some_things' => [
-                [
-                    'callback' => [$instance, 'second_function'],
-                    'priority' => 10,
-                ]
-            ]
-        ];
-        $this->assertSame($expected, $property->getValue());
+        Sandbox\Actions::remove_action($tag, [$instance, 'first_function']);
+
+        $hook = new Sandbox\Hook($tag);
+        $hook->addHook(10, [$instance, 'second_function']);
+
+        $expected = $hook;
+        $actual = $property->getValue()[$tag];
+
+        $this->assertEquals($expected, $actual);
         $reset_actions();
     }
 
