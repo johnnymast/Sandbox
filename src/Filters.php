@@ -1,10 +1,10 @@
 <?php
 namespace Sandbox;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Sandbox\Hook;
 
 class Filters
 {
-    use Traits\ArrayFilter;
 
     /**
      * @var array
@@ -16,9 +16,9 @@ class Filters
      */
     static private $annotaion_handler = null;
 
-
     /**
-     *
+     * Initialize the Annotation Handler for
+     * dealing with filter objects.
      */
     static public function init() {
         if (!self::$annotaion_handler) {
@@ -47,16 +47,10 @@ class Filters
             return false;
 
         if (isset(self::$filters[$tag]) === false) {
-            self::$filters[$tag] = [];
+            self::$filters[$tag] = new Hook($tag);
         }
-        self::$filters[$tag][] = [
-            'callback' => $callback,
-            'priority' => $priority,
-        ];
 
-        self::filterByPriority(self::$filters[$tag]);
-
-        reset( self::$filters[$tag] );
+        self::$filters[$tag]->addHook($priority, $callback);
 
         return true;
     }
@@ -72,18 +66,17 @@ class Filters
             return false;
 
         if (isset(self::$filters[$tag]) === true) {
-            $data = array();
             $found = false;
+            $hooks = self::$filters[$tag]->getHooks();
 
-            foreach (self::$filters[$tag] as $item) {
-                if ($item['callback'] == $callback) {
-                    $found = true;
-                } else {
-                    $data[] = $item;
+            foreach($hooks as $priority => $callbacks) {
+                foreach($callbacks as $entry) {
+                    if ($entry['callback'] == $callback) {
+                        self::$filters[$tag]->removeCallbackWithPriority($priority, $callback);
+                        $found = true;
+                    }
                 }
             }
-
-            self::$filters[$tag] = $data;
             return $found;
         }
         return false;
@@ -99,10 +92,10 @@ class Filters
             return false;
 
         if (isset(self::$filters[$tag])) {
+            self::$filters[$tag]->removeAllHooks();
             unset(self::$filters[$tag]);
             return true;
         }
-
         return false;
     }
 
@@ -133,16 +126,18 @@ class Filters
         if (isset(self::$filters[$tag]) === false)
             return $value;
 
-        reset(self::$filters[$tag]);
+        $hooks = self::$filters[$tag]->getHooks();
+        reset($hooks);
 
-        do {
+        foreach($hooks as $priority => $callbacks) {
+            do {
 
-            $entry = current(self::$filters[$tag]);
-            if (is_callable($entry['callback']))
-                $value = call_user_func($entry['callback'], $value);
+                $entry = current($callbacks);
+                if (is_callable($entry['callback']))
+                    $value = call_user_func($entry['callback'], $value);
 
-        } while (next(self::$filters[$tag]));
-
+            } while (next($callbacks));
+        }
         return $value;
     }
 }
