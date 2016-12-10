@@ -8,7 +8,7 @@ class Filter
 {
     private $propertyName;
     private $dataType = 'string';
-    private $options  = [];
+    private $options = [];
 
     public function __construct($options = [])
     {
@@ -18,18 +18,18 @@ class Filter
         }
 
         $default = [
-          'priority' => 0,
+            'priority' => 0,
         ];
 
-        foreach($default as $key => $value) {
-            if  (isset($options[$key]) == false) {
+        foreach ($default as $key => $value) {
+            if (isset($options[$key]) == false) {
                 $options[$key] = $value;
             }
         }
 
         foreach ($options as $key => $value) {
             if (!property_exists($this, $key)) {
-            //    throw new \InvalidArgumentException(sprintf('Property "%s" does not exist', $key));
+                throw new \InvalidArgumentException(sprintf('Property "%s" does not exist', $key));
             }
 
             $this->$key = $value;

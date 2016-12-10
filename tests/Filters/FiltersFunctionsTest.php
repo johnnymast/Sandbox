@@ -1,5 +1,6 @@
 <?php
 namespace Sandbox\Tests\Filters;
+
 use Sandbox;
 
 require_once dirname(__FILE__) . '/Assets/myCallbackFunctions.php';
@@ -23,7 +24,9 @@ class FiltersFunctionsTest extends \PHPUnit_Framework_TestCase
 
         $string = 'Hello World';
 
-        Sandbox\Filters::add_filter('prepend_chars', 'Sandbox\Tests\Filters\Assets\my_callback_functions_filter_prepend');
+        Sandbox\Filters::add_filter('prepend_chars',
+            'Sandbox\Tests\Filters\Assets\my_callback_functions_filter_prepend');
+
         $output = Sandbox\Filters::apply_filter('prepend_chars', $string);
 
         $expected = '@@' . $string;

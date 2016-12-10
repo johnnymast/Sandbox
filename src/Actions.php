@@ -1,37 +1,17 @@
 <?php
 namespace Sandbox;
 
-
 class Actions
 {
-    use Traits\ArrayFilter;
 
     /**
      * @var array
      */
     private static $actions = [];
 
-    /**
-     * @return Actions
-     */
-    public static function get_instance()
+    public static function getActions()
     {
-        static $inst = null;
-        if ($inst === null) {
-            $inst = new Actions();
-        }
-        return $inst;
-    }
-
-    public static function getActions() {
         return self::$actions;
-    }
-
-
-
-    public static function cleanup() {
-        //unset(self::$actions);
-       self::$actions = [];
     }
 
     /**
@@ -42,6 +22,7 @@ class Actions
      */
     public static function add_action($tag = '', $callback = '', $priority = 10)
     {
+
         if (empty($tag) || empty($callback)) {
             return false;
         }
@@ -86,13 +67,12 @@ class Actions
         $hooks = self::$actions[$tag]->getHooks();
         reset(self::$actions[$tag]);
 
-        foreach($hooks as $priority => $callbacks) {
+        foreach ($hooks as $priority => $callbacks) {
             do {
-
                 $entry = current($callbacks);
-                if (is_callable($entry['callback']))
+                if (is_callable($entry['callback'])) {
                     $value = call_user_func($entry['callback'], $value);
-
+                }
             } while (next($callbacks));
         }
         return $value;
@@ -103,17 +83,18 @@ class Actions
      * @param string $callback
      * @return bool
      */
-    static public function remove_action($tag = '', $callback = '')
+    public static function remove_action($tag, $callback)
     {
-        if (empty($tag) || empty($callback))
-        return false;
+        if (empty($tag) || empty($callback)) {
+            return false;
+        }
 
         if (isset(self::$actions[$tag]) === true) {
             $found = false;
             $hooks = self::$actions[$tag]->getHooks();
 
-            foreach($hooks as $priority => $callbacks) {
-                foreach($callbacks as $entry) {
+            foreach ($hooks as $priority => $callbacks) {
+                foreach ($callbacks as $entry) {
                     if ($entry['callback'] == $callback) {
                         self::$actions[$tag]->removeCallbackWithPriority($priority, $callback);
                         $found = true;
@@ -129,7 +110,7 @@ class Actions
      * @param string $tag
      * @return bool
      */
-    static public function remove_all_actions($tag = '')
+    public static function remove_all_actions($tag)
     {
         if (empty($tag)) {
             return false;

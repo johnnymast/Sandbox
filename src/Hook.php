@@ -24,7 +24,12 @@ class Hook
         $this->tag = $tag;
     }
 
-    public function addHook($priority = 10, $callback = '') {
+    /**
+     * @param int $priority
+     * @param string $callback
+     */
+    public function addHook($priority = 10, $callback = '')
+    {
         $this->hooks[$priority][] = [
             'callback' => $callback,
             'priority' => $priority,
@@ -40,7 +45,12 @@ class Hook
         return $this->hooks;
     }
 
-    public function removeCallbackWithPriority($priority = 10, $callback = '') {
+    /**
+     * @param int $priority
+     * @param string $callback
+     */
+    public function removeCallbackWithPriority($priority = 10, $callback = '')
+    {
         $hooks = $this->getHooks();
         if (isset($hooks[$priority]) == true) {
             $callbacks = $hooks[$priority];
@@ -64,8 +74,11 @@ class Hook
         }
     }
 
-    public function removeAllHooks() {
+    /**
+     *
+     */
+    public function removeAllHooks()
+    {
         unset($this->hooks);
     }
-
 }

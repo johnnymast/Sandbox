@@ -12,7 +12,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Filters::add_filter
      */
-    function test_add_filter_returns_false_on_empty_tag()
+    public function test_add_filter_returns_false_on_empty_tag()
     {
         $this->assertFalse(
             Sandbox\Filters::add_filter('', 'some_callback')
@@ -22,7 +22,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Filters::add_filter
      */
-    function test_add_filter_returns_false_on_empty_callback()
+    public function test_add_filter_returns_false_on_empty_callback()
     {
         $this->assertFalse(
             Sandbox\Filters::add_filter('some_tag', '')
@@ -32,9 +32,10 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Filters::add_filter
      */
-    function test_add_filter_returns_true_on_success()
+    public function test_add_filter_returns_true_on_success()
     {
-        $callback = function () {};
+        $callback = function () {
+        };
         $this->assertTrue(
             Sandbox\Filters::add_filter('some_tag', $callback)
         );
@@ -50,9 +51,10 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback = function () {};
+        $callback = function () {
+        };
 
-        $tag  = 'new_filter';
+        $tag = 'new_filter';
         $priority = 10;
 
         $hook = new Sandbox\Hook($tag);
@@ -75,8 +77,13 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback1 = function () {};
-        $callback2 = function () {};
+        $callback1 = function () {
+            /* Void */
+        };
+
+        $callback2 = function () {
+            /* Void */
+        };
 
         $tag = 'new_filter';
         $priority = 10;
@@ -104,8 +111,13 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $property->setValue([]);
 
 
-        $callback1 = function () {};
-        $callback2 = function () {};
+        $callback1 = function () {
+            /* Void */
+        };
+
+        $callback2 = function () {
+            /* Void */
+        };
 
         $tag = 'test_add_filter_arranges_priority_correct';
 
@@ -144,14 +156,13 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $expected = $hook;
         $actual = $property->getValue()[$tag];
 
-
-       $this->assertEquals($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     /**
      * @covers Sandbox\Filters::remove_filter
      */
-    function test_remove_filter_returns_false_on_empty_tag()
+    public function test_remove_filter_returns_false_on_empty_tag()
     {
         $this->assertFalse(
             Sandbox\Filters::remove_filter('', 'some_callback')
@@ -161,7 +172,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Filters::remove_filter
      */
-    function test_remove_filter_returns_false_on_empty_callback()
+    public function test_remove_filter_returns_false_on_empty_callback()
     {
         $this->assertFalse(
             Sandbox\Filters::remove_filter('some_tag', '')
@@ -171,9 +182,12 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Filters::remove_filter
      */
-    function test_remove_filter_returns_true_on_success()
+    public function test_remove_filter_returns_true_on_success()
     {
-        $callback = function () {};
+        $callback = function () {
+            /* Void */
+        };
+
         Sandbox\Filters::add_filter('some_filter', $callback);
 
         $this->assertTrue(
@@ -181,13 +195,15 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    function test_remove_filter_actually_removes_the_filter() {
+    public function test_remove_filter_actually_removes_the_filter()
+    {
         $tag = 'shiny_new_filter';
         $priority = 10;
 
-        $callback = function($string) {
-            return $string.'@';
+        $callback = function ($string) {
+            return $string . '@';
         };
+
         Sandbox\Filters::add_filter($tag, $callback, $priority);
 
         $expected = '';
@@ -202,13 +218,13 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Filters::remove_filter
      */
-    function test_remove_filter_removes_the_filter_correctly()
+    public function test_remove_filter_removes_the_filter_correctly()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
         $property->setAccessible(true);
 
-        $reset_filter = function() use ($property) {
+        $reset_filter = function () use ($property) {
             $property->setValue([]);
         };
         $reset_filter();
@@ -234,8 +250,14 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         /**
          * Test callback is a closure
          */
-        $callback1 = function () {};
-        $callback2 = function () {};
+        $callback1 = function () {
+            /* Void */
+        };
+
+        $callback2 = function () {
+            /* Void */
+        };
+
         Sandbox\Filters::add_filter('some_filter', $callback1, 1);
         Sandbox\Filters::add_filter('some_filter', $callback2, 2);
         Sandbox\Filters::remove_filter('some_filter', $callback1);
@@ -269,7 +291,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Filters::remove_all_filters
      */
-    function test_remove_all_filters_false_on_empty_tag()
+    public function test_remove_all_filters_false_on_empty_tag()
     {
         $this->assertFalse(
             Sandbox\Filters::remove_all_filters('')
@@ -279,9 +301,12 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Filters::remove_all_filters
      */
-    function test_remove_all_filters_returns_true_on_success()
+    public function test_remove_all_filters_returns_true_on_success()
     {
-        $callback = function () {};
+        $callback = function () {
+            /* Void */
+        };
+
         Sandbox\Filters::add_filter('some_filter', $callback, 1);
 
         $this->assertTrue(

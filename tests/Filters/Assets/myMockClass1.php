@@ -1,12 +1,13 @@
 <?php
 namespace Sandbox\Tests\Filters\Assets;
+
 use Sandbox;
 
 class myMockClass1
 {
 
     /**
-     * myMobclass1 constructor.
+     * myMockClass1 constructor.
      */
     public function __construct()
     {
@@ -18,22 +19,25 @@ class myMockClass1
      * @param string $text
      * @return string
      */
-    public function prepend_chars($text='') {
-        return '@@'.$text;
+    public function prepend_chars($text = '')
+    {
+        return '@@' . $text;
     }
 
     /**
      * @param string $text
      * @return string
      */
-    public function append_chars($text='') {
-        return $text.'@@';
+    public function append_chars($text = '')
+    {
+        return $text . '@@';
     }
 
     /**
      * @return string
      */
-    public function execute() {
+    public function execute()
+    {
         return Sandbox\Filters::apply_filter('manipulate_string', 'This is a text');
     }
 }

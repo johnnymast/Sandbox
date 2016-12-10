@@ -17,7 +17,7 @@ class myMockClass1
      */
     public function first_function($args = [])
     {
-
+        /* void */
     }
 
     /**
@@ -25,6 +25,6 @@ class myMockClass1
      */
     public function second_function($args = [])
     {
-
+        /* Void */
     }
 }

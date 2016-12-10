@@ -1,5 +1,4 @@
 <?php
-
 namespace Sandbox\Tests\Actions;
 
 use Sandbox;
@@ -36,7 +35,8 @@ class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix', 'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_astrix_symbol');
+        Sandbox\Actions::add_action('echo_astrix',
+            'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_astrix_symbol');
 
         $expected = '*';
         $output = $this->capture_test_output(
@@ -57,8 +57,11 @@ class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix', 'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_astrix_symbol');
-        Sandbox\Actions::add_action('echo_at', 'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_at_symbol');
+        Sandbox\Actions::add_action('echo_astrix',
+            'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_astrix_symbol');
+
+        Sandbox\Actions::add_action('echo_at',
+            'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_at_symbol');
 
         $expected = '*@';
         $output = $this->capture_test_output(

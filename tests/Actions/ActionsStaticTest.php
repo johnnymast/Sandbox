@@ -3,15 +3,13 @@
 namespace Sandbox\Tests\Actions;
 
 use Sandbox;
-use Sandbox\Tests\Actions\Assets;
-use SebastianBergmann\PeekAndPoke\Proxy as Proxy;
 
 class ActionsStaticTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @covers Sandbox\Actions::add_action
      */
-    function test_add_action_returns_false_on_empty_tag()
+    public function test_add_action_returns_false_on_empty_tag()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -26,7 +24,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::add_action
      */
-    function test_add_action_returns_false_on_empty_callback()
+    public function test_add_action_returns_false_on_empty_callback()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -41,14 +39,17 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::add_action
      */
-    function test_add_action_returns_true_on_success()
+    public function test_add_action_returns_true_on_success()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback = function () {};
+        $callback = function () {
+            /* Void */
+        };
+
         $this->assertTrue(
             Sandbox\Actions::add_action('some_action', $callback)
         );
@@ -65,7 +66,9 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property->setValue([]);
 
 
-        $callback = function () {};
+        $callback = function () {
+            /* void */
+        };
 
         $tag  = 'new_filter';
         $priority = 10;
@@ -90,8 +93,13 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback1 = function () {};
-        $callback2 = function () {};
+        $callback1 = function () {
+            /* void */
+        };
+
+        $callback2 = function () {
+            /* void */
+        };
 
         $tag = 'new_action';
         $priority = 10;
@@ -118,8 +126,13 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $callback1 = function () {};
-        $callback2 = function () {};
+        $callback1 = function () {
+            /* void */
+        };
+
+        $callback2 = function () {
+            /* void */
+        };
 
         $tag = 'test_add_action_arranges_priority_correct';
 
@@ -134,7 +147,6 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $expected = $hook->getHooks()[0][0];
 
         $this->assertSame($expected, $actual);
-
     }
 
     /**
@@ -149,26 +161,22 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
 
         $instance = new Sandbox\Tests\Actions\Assets\myMockClass1;
 
-        $expected = [
-            'do_some_things' => [
-                [
-                    'callback' => [$instance, 'first_function'],
-                    'priority' => 10,
-                ],
-                [
-                    'callback' => [$instance, 'second_function'],
-                    'priority' => 10,
-                ],
-            ]
-        ];
-        //FIXME
-        //$this->assertSame($expected, $property->getValue());
+        $tag = 'do_some_things';
+        $priority = 10;
+
+        $hook = new Sandbox\Hook($tag);
+        $hook->addHook($priority, [$instance, 'first_function']);
+        $hook->addHook($priority, [$instance, 'second_function']);
+
+        $expected = $hook;
+        $actual = $property->getValue()[$tag];
+        $this->assertEquals($expected, $actual);
     }
 
     /**
      * @covers Sandbox\Actions::remove_action
      */
-    function test_remove_action_returns_false_on_empty_tag()
+    public function test_remove_action_returns_false_on_empty_tag()
     {
         $this->assertFalse(
             Sandbox\Actions::remove_action('', 'some_callback')
@@ -178,7 +186,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::remove_action
      */
-    function test_remove_action_returns_false_on_empty_callback()
+    public function test_remove_action_returns_false_on_empty_callback()
     {
         $this->assertFalse(
             Sandbox\Actions::remove_action('some_action', '')
@@ -202,7 +210,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::remove_action
      */
-    function test_remove_action_removes_the_action_correctly()
+    public function test_remove_action_removes_the_action_correctly()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -235,8 +243,14 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
          * Test callback is a closure
          */
 
-        $callback1 = function () {};
-        $callback2 = function () {};
+        $callback1 = function () {
+            /* Void */
+        };
+
+        $callback2 = function () {
+            /* Void */
+        };
+
         Sandbox\Actions::add_action($tag, $callback1, 1);
         Sandbox\Actions::add_action($tag, $callback2, 2);
         Sandbox\Actions::remove_action($tag, $callback1);
@@ -270,7 +284,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::remove_all_actions
      */
-    function test_remove_all_actions_false_on_empty_tag()
+    public function test_remove_all_actions_false_on_empty_tag()
     {
         $this->assertFalse(
             Sandbox\Actions::remove_all_actions('')
@@ -280,7 +294,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::remove_all_actions
      */
-    function test_remove_all_actions_returns_true_on_success()
+    public function test_remove_all_actions_returns_true_on_success()
     {
         $callback = function () {
         };

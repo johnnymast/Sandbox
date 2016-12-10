@@ -33,7 +33,7 @@ class ActionsClosuresTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix', function() {
+        Sandbox\Actions::add_action('echo_astrix', function () {
             echo '*';
         });
 

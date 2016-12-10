@@ -69,7 +69,6 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
                 Sandbox\Actions::do_action('echo_at');
             }
         );
-        //TODO: use $this->expectOutputString(''); // tell PHPUnit to expect '' as output
         $this->assertEquals($expected, $output);
     }
 }
