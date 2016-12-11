@@ -10,7 +10,6 @@ class Action
 
 
     /**
-     * @param string $text
      */
     public function firstFunc()
     {
@@ -18,7 +17,6 @@ class Action
     }
 
     /**
-     * @param string $text
      */
     public function secondFunc()
     {
@@ -28,7 +26,7 @@ class Action
     /**
      * Register and call the actions.
      *
-     * @return mixed
+     * @return string
      */
     public function execute()
     {
