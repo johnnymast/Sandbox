@@ -25,7 +25,7 @@ class Test
         return '!!' . $text;
     }
 }
-Sandbox\Filters::register_filter_object(new Test());
+Sandbox\Filters::registerFilterObject(new Test());
 
-echo "Result ".Sandbox\Filters::apply_filter('prepend_at', 'Hello world');
+echo "Result ".Sandbox\Filters::applyFilter('prepend_at', 'Hello world');
 echo "KLAAR\n";

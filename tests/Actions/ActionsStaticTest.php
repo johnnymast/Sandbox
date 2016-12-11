@@ -147,7 +147,11 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         Sandbox\Actions::addAction($tag, $callback1, 1);
         Sandbox\Actions::addAction($tag, $callback2, 0);
 
-        $actual = $property->getValue()[$tag]->getHooks()[0][0];
+        /** @var Sandbox\Hook $hooks */
+        /** @var \ReflectionProperty $property */
+
+        $hooks = $property->getValue()[$tag];
+        $actual = $hooks->getHooks()[0][0];
         $expected = $hook->getHooks()[0][0];
 
         $this->assertSame($expected, $actual);
@@ -163,7 +167,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $instance = new Sandbox\Tests\Actions\Assets\myMockClass1;
+        $instance = new Sandbox\Tests\Actions\Assets\MockClass1;
 
         $tag = 'do_some_things';
         $priority = 10;
@@ -284,7 +288,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
          * Test callback is inside a class
          */
         $tag = 'do_some_things';
-        $instance = new Sandbox\Tests\Actions\Assets\myMockClass1;
+        $instance = new Sandbox\Tests\Actions\Assets\MockClass1;
         Sandbox\Actions::removeAction($tag, [$instance, 'firstAction']);
 
         $hook = new Sandbox\Hook($tag);
@@ -315,7 +319,7 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
      */
     public function testRemoveAllActionsReturnsFalseIfTagIsNotFound()
     {
-        $this->assertFalse(Sandbox\Actions::removeAllActions('i_dont_exist'));
+        $this->assertFalse(Sandbox\Actions::removeAllActions('i_do_not_exist'));
     }
 
     /**

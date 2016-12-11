@@ -31,7 +31,7 @@ class Filters
     /**
      * @param $object
      */
-    public static function register_filter_object($object)
+    public static function registerFilterObject($object)
     {
         self::init();
         self::$annotation_handler->read($object);
@@ -43,7 +43,7 @@ class Filters
      * @param int $priority
      * @return bool
      */
-    public static function add_filter($tag = '', $callback = '', $priority = 10)
+    public static function addFilter($tag = '', $callback = '', $priority = 10)
     {
         if (empty($tag) || empty($callback)) {
             return false;
@@ -63,7 +63,7 @@ class Filters
      * @param string $callback
      * @return bool
      */
-    public static function remove_filter($tag = '', $callback = '')
+    public static function removeFilter($tag = '', $callback = '')
     {
         if (empty($tag) || empty($callback)) {
             return false;
@@ -90,7 +90,7 @@ class Filters
      * @param string $tag
      * @return bool
      */
-    public static function remove_all_filters($tag = '')
+    public static function removeAllFilters($tag = '')
     {
         if (empty($tag)) {
             return false;
@@ -109,14 +109,14 @@ class Filters
      * @param string $value
      * @return string
      */
-    public static function apply_filter($filter = '', $value = '')
+    public static function applyFilter($filter = '', $value = '')
     {
         if (is_array($filter)) {
             foreach ($filter as $single) {
-                $value = self::execute_filter($single, $value);
+                $value = self::execute($single, $value);
             }
         } else {
-            $value = self::execute_filter($filter, $value);
+            $value = self::execute($filter, $value);
         }
         return $value;
     }
@@ -126,7 +126,7 @@ class Filters
      * @param string $value
      * @return string
      */
-    private static function execute_filter($tag, $value = '')
+    private static function execute($tag, $value = '')
     {
         if (isset(self::$filters[$tag]) === false) {
             return $value;

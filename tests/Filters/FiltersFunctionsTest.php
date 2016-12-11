@@ -3,8 +3,6 @@ namespace Sandbox\Tests\Filters;
 
 use Sandbox;
 
-require_once dirname(__FILE__) . '/Assets/myCallbackFunctions.php';
-
 /**
  * @since version 1.0
  * @covers Sandbox\Filters
@@ -13,9 +11,9 @@ class FiltersFunctionsTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
-     * @covers Sandbox\Filters::apply_filter
+     * @covers Sandbox\Filters::applyFilter
      */
-    public function test_apply_filter_works_correct_with_one_function()
+    public function testApplyFilterWorksCorrectWithOneFunction()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
@@ -24,19 +22,18 @@ class FiltersFunctionsTest extends \PHPUnit_Framework_TestCase
 
         $string = 'Hello World';
 
-        Sandbox\Filters::add_filter('prepend_chars',
-            'Sandbox\Tests\Filters\Assets\my_callback_functions_filter_prepend');
+        Sandbox\Filters::addFilter('prepend_chars', 'Sandbox\Tests\Filters\Assets\filterPrepend');
 
-        $output = Sandbox\Filters::apply_filter('prepend_chars', $string);
+        $output = Sandbox\Filters::applyFilter('prepend_chars', $string);
 
         $expected = '@@' . $string;
         $this->assertEquals($expected, $output);
     }
 
     /**
-     * @covers Sandbox\Filters::apply_filter
+     * @covers Sandbox\Filters::applyFilter
      */
-    public function test_apply_filter_works_correct_with_two_functions()
+    public function testApplyFilterWorksCorrectWithTwoFunctions()
     {
 
         $filters = new \ReflectionClass('Sandbox\Filters');
@@ -46,9 +43,9 @@ class FiltersFunctionsTest extends \PHPUnit_Framework_TestCase
 
         $string = 'Hello World';
 
-        Sandbox\Filters::add_filter('apply_chars', 'Sandbox\Tests\Filters\Assets\my_callback_functions_filter_prepend');
-        Sandbox\Filters::add_filter('apply_chars', 'Sandbox\Tests\Filters\Assets\my_callback_functions_filter_append');
-        $output = Sandbox\Filters::apply_filter('apply_chars', $string);
+        Sandbox\Filters::addFilter('apply_chars', 'Sandbox\Tests\Filters\Assets\filterPrepend');
+        Sandbox\Filters::addFilter('apply_chars', 'Sandbox\Tests\Filters\Assets\filterAppend');
+        $output = Sandbox\Filters::applyFilter('apply_chars', $string);
 
         $expected = '@@' . $string . '@@';
         $this->assertEquals($expected, $output);

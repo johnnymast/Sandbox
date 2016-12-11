@@ -10,9 +10,9 @@ use Sandbox;
 class FiltersClassesTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Sandbox\Filters::apply_filter
+     * @covers Sandbox\Filters::applyFilter
      */
-    public function test_apply_filter_works_correct_with_one_class_function()
+    public function testApplyFilterWorksCorrectWithOneClassMethod()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
@@ -20,19 +20,19 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
         $property->setValue([]);
 
         $string = 'Hello World';
-        $instance = new Sandbox\Tests\Filters\Assets\myMockClass2;
+        $instance = new Sandbox\Tests\Filters\Assets\MockClass2;
 
-        Sandbox\Filters::add_filter('prepend_chars', [$instance, 'prependChars']);
-        $output = Sandbox\Filters::apply_filter('prepend_chars', $string);
+        Sandbox\Filters::addFilter('prepend_chars', [$instance, 'prependChars']);
+        $output = Sandbox\Filters::applyFilter('prepend_chars', $string);
 
         $expected = '@@' . $string;
         $this->assertEquals($expected, $output);
     }
 
     /**
-     * @covers Sandbox\Filters::apply_filter
+     * @covers Sandbox\Filters::applyFilter
      */
-    public function test_apply_filter_works_correct_with_two_class_functions()
+    public function testApplyFilterWorksCorrectWithTwoClassMethods()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
@@ -40,12 +40,12 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
         $property->setValue([]);
 
         $string = 'Hello World';
-        $instance = new Sandbox\Tests\Filters\Assets\myMockClass2;
+        $instance = new Sandbox\Tests\Filters\Assets\MockClass2;
 
-        Sandbox\Filters::add_filter('apply_chars', [$instance, 'prependChars']);
-        Sandbox\Filters::add_filter('apply_chars', [$instance, 'appendChars']);
+        Sandbox\Filters::addFilter('apply_chars', [$instance, 'prependChars']);
+        Sandbox\Filters::addFilter('apply_chars', [$instance, 'appendChars']);
 
-        $output = Sandbox\Filters::apply_filter('apply_chars', $string);
+        $output = Sandbox\Filters::applyFilter('apply_chars', $string);
 
         $expected = '@@' . $string . '@@';
         $this->assertEquals($expected, $output);

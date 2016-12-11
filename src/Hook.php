@@ -63,11 +63,11 @@ class Hook
                     }
 
                     if (count($this->hooks[$priority]) > 0) {
-                        $newhooks = [];
+                        $new = [];
                         foreach ($this->hooks[$priority] as $hook) {
-                            $newhooks[] = $hook;
+                            $new[] = $hook;
                         }
-                        $this->hooks[$priority] = $newhooks;
+                        $this->hooks[$priority] = $new;
                     }
                 }
             }

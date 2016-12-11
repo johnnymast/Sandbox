@@ -10,41 +10,43 @@ use Sandbox;
 class FiltersStaticTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Sandbox\Filters::add_filter
+     * @covers Sandbox\Filters::addFilter
      */
-    public function test_add_filter_returns_false_on_empty_tag()
+    public function testAddFilterReturnsFalseOnEmptyTag()
     {
         $this->assertFalse(
-            Sandbox\Filters::add_filter('', 'some_callback')
+            Sandbox\Filters::addFilter('', 'some_callback')
         );
     }
 
     /**
-     * @covers Sandbox\Filters::add_filter
+     * @covers Sandbox\Filters::addFilter
      */
-    public function test_add_filter_returns_false_on_empty_callback()
+    public function testAddFilterReturnsFalseOnEmptyCallback()
     {
         $this->assertFalse(
-            Sandbox\Filters::add_filter('some_tag', '')
+            Sandbox\Filters::addFilter('some_tag', '')
         );
     }
 
     /**
-     * @covers Sandbox\Filters::add_filter
+     * @covers Sandbox\Filters::addFilter
      */
-    public function test_add_filter_returns_true_on_success()
+    public function testAddFilterReturnsTrueOnSuccess()
     {
         $callback = function () {
+            /* void */
         };
+
         $this->assertTrue(
-            Sandbox\Filters::add_filter('some_tag', $callback)
+            Sandbox\Filters::addFilter('some_tag', $callback)
         );
     }
 
     /**
-     * @covers Sandbox\Filters::add_filter
+     * @covers Sandbox\Filters::addFilter
      */
-    public function test_add_filter_adds_filter()
+    public function testAddFilterAddsFilterCorrectly()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
@@ -52,6 +54,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $property->setValue([]);
 
         $callback = function () {
+            /* void */
         };
 
         $tag = 'new_filter';
@@ -60,7 +63,7 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $hook = new Sandbox\Hook($tag);
         $hook->addHook($priority, $callback);
 
-        Sandbox\Filters::add_filter($tag, $callback);
+        Sandbox\Filters::addFilter($tag, $callback);
 
         $actual = $property->getValue()[$tag];
         $expected = $hook;
@@ -68,9 +71,9 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Filters::add_filter
+     * @covers Sandbox\Filters::addFilter
      */
-    public function test_add_filter_adds_multiple_filters()
+    public function testAddFilterAddsMultipleFiltersCorrectly()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
@@ -78,11 +81,11 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $property->setValue([]);
 
         $callback1 = function () {
-            /* Void */
+            /* void */
         };
 
         $callback2 = function () {
-            /* Void */
+            /* void */
         };
 
         $tag = 'new_filter';
@@ -92,8 +95,8 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $hook->addHook($priority, $callback1);
         $hook->addHook($priority, $callback2);
 
-        Sandbox\Filters::add_filter($tag, $callback1);
-        Sandbox\Filters::add_filter($tag, $callback2);
+        Sandbox\Filters::addFilter($tag, $callback1);
+        Sandbox\Filters::addFilter($tag, $callback2);
 
         $actual = $property->getValue()[$tag];
         $expected = $hook;
@@ -101,15 +104,14 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Filters::add_filter
+     * @covers Sandbox\Filters::addFilter
      */
-    public function test_add_filter_arranges_priority_correct()
+    public function testAddFilterSortsPriorityCorrect()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
         $property->setAccessible(true);
         $property->setValue([]);
-
 
         $callback1 = function () {
             /* Void */
@@ -125,33 +127,37 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         $hook->addHook(1, $callback1);
         $hook->addHook(0, $callback2);
 
-        Sandbox\Filters::add_filter($tag, $callback1, 1);
-        Sandbox\Filters::add_filter($tag, $callback2, 0);
+        Sandbox\Filters::addFilter($tag, $callback1, 1);
+        Sandbox\Filters::addFilter($tag, $callback2, 0);
 
-        $actual = $property->getValue()[$tag]->getHooks()[0][0];
+        /** @var Sandbox\Hook $hooks */
+        /** @var \ReflectionProperty $property */
+
+        $hooks = $property->getValue()[$tag];
+        $actual = $hooks->getHooks()[0][0];
         $expected = $hook->getHooks()[0][0];
 
         $this->assertSame($expected, $actual);
     }
 
     /**
-     * @covers Sandbox\Filters::add_filter
+     * @covers Sandbox\Filters::addFilter
      */
-    public function test_add_filter_in_class_method_has_the_correct_callback()
+    public function testAddFilterInClassMethodHasTheCorrectCallback()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $instance = new Sandbox\Tests\Filters\Assets\myMockClass1;
+        $instance = new Sandbox\Tests\Filters\Assets\MockClass1;
 
         $tag = 'manipulate_string';
         $priority = 10;
 
         $hook = new Sandbox\Hook($tag);
-        $hook->addHook($priority, [$instance, 'prepend_chars']);
-        $hook->addHook($priority, [$instance, 'append_chars']);
+        $hook->addHook($priority, [$instance, 'prependChars']);
+        $hook->addHook($priority, [$instance, 'appendChars']);
 
         $expected = $hook;
         $actual = $property->getValue()[$tag];
@@ -160,42 +166,45 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Filters::remove_filter
+     * @covers Sandbox\Filters::removeFilter
      */
-    public function test_remove_filter_returns_false_on_empty_tag()
+    public function testRemoveFilterReturnsFalseOnEmptyTag()
     {
         $this->assertFalse(
-            Sandbox\Filters::remove_filter('', 'some_callback')
+            Sandbox\Filters::removeFilter('', 'some_callback')
         );
     }
 
     /**
-     * @covers Sandbox\Filters::remove_filter
+     * @covers Sandbox\Filters::removeFilter
      */
-    public function test_remove_filter_returns_false_on_empty_callback()
+    public function testRemoveFilterReturnsFalseOnEmptyCallback()
     {
         $this->assertFalse(
-            Sandbox\Filters::remove_filter('some_tag', '')
+            Sandbox\Filters::removeFilter('some_tag', '')
         );
     }
 
     /**
-     * @covers Sandbox\Filters::remove_filter
+     * @covers Sandbox\Filters::removeFilter
      */
-    public function test_remove_filter_returns_true_on_success()
+    public function testRemoveFilterReturnsTrueOnSuccess()
     {
         $callback = function () {
-            /* Void */
+            /* void */
         };
 
-        Sandbox\Filters::add_filter('some_filter', $callback);
+        Sandbox\Filters::addFilter('some_filter', $callback);
 
         $this->assertTrue(
-            Sandbox\Filters::remove_filter('some_filter', $callback)
+            Sandbox\Filters::removeFilter('some_filter', $callback)
         );
     }
 
-    public function test_remove_filter_actually_removes_the_filter()
+    /**
+     * @covers Sandbox\Filters::removeFilter
+     */
+    public function testRemoveFilterActuallyRemovesTheFilter()
     {
         $tag = 'shiny_new_filter';
         $priority = 10;
@@ -204,21 +213,21 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
             return $string . '@';
         };
 
-        Sandbox\Filters::add_filter($tag, $callback, $priority);
+        Sandbox\Filters::addFilter($tag, $callback, $priority);
 
         $expected = '';
-        Sandbox\Filters::remove_filter($tag, $callback);
+        Sandbox\Filters::removeFilter($tag, $callback);
 
-        $actual = Sandbox\Filters::apply_filter($tag, '');
+        $actual = Sandbox\Filters::applyFilter($tag, '');
 
 
         $this->assertEquals($expected, $actual);
     }
 
     /**
-     * @covers Sandbox\Filters::remove_filter
+     * @covers Sandbox\Filters::removeFilter
      */
-    public function test_remove_filter_removes_the_filter_correctly()
+    public function testRemoveFilterRemovesTheFilterCorrectly()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
@@ -234,9 +243,9 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         /**
          * Test callback is a string
          */
-        Sandbox\Filters::add_filter($tag, 'callback1', 1);
-        Sandbox\Filters::add_filter($tag, 'callback2', 2);
-        Sandbox\Filters::remove_filter($tag, 'callback1');
+        Sandbox\Filters::addFilter($tag, 'callback1', 1);
+        Sandbox\Filters::addFilter($tag, 'callback2', 2);
+        Sandbox\Filters::removeFilter($tag, 'callback1');
 
         $hook = new Sandbox\Hook($tag);
         $hook->addHook(2, 'callback2');
@@ -251,16 +260,16 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
          * Test callback is a closure
          */
         $callback1 = function () {
-            /* Void */
+            /* void */
         };
 
         $callback2 = function () {
-            /* Void */
+            /* void */
         };
 
-        Sandbox\Filters::add_filter('some_filter', $callback1, 1);
-        Sandbox\Filters::add_filter('some_filter', $callback2, 2);
-        Sandbox\Filters::remove_filter('some_filter', $callback1);
+        Sandbox\Filters::addFilter('some_filter', $callback1, 1);
+        Sandbox\Filters::addFilter('some_filter', $callback2, 2);
+        Sandbox\Filters::removeFilter('some_filter', $callback1);
 
         $hook = new Sandbox\Hook($tag);
         $hook->addHook(2, $callback2);
@@ -275,11 +284,11 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
         /**
          * Test callback is inside a class
          */
-        $instance = new Sandbox\Tests\Filters\Assets\myMockClass1;
-        Sandbox\Filters::remove_filter('manipulate_string', [$instance, 'prepend_chars']);
+        $instance = new Sandbox\Tests\Filters\Assets\MockClass1;
+        Sandbox\Filters::removeFilter('manipulate_string', [$instance, 'prependChars']);
 
         $hook = new Sandbox\Hook('manipulate_string');
-        $hook->addHook(10, [$instance, 'append_chars']);
+        $hook->addHook(10, [$instance, 'appendChars']);
 
         $expected = $hook;
         $actual = $property->getValue()['manipulate_string'];
@@ -289,36 +298,44 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Filters::remove_all_filters
+     * @covers Sandbox\Filters::removeFilter
      */
-    public function test_remove_all_filters_false_on_empty_tag()
+    public function testRemoveFilterReturnsFalseIfFilterCouldNotBeFound()
+    {
+        $this->assertFalse(Sandbox\Filters::removeFilter('i_do_not_exist', 'no_callback_here'));
+    }
+
+    /**
+     * @covers Sandbox\Filters::removeAllFilters
+     */
+    public function testRemoveAllFiltersReturnsFalseOnEmptyTag()
     {
         $this->assertFalse(
-            Sandbox\Filters::remove_all_filters('')
+            Sandbox\Filters::removeAllFilters('')
         );
     }
 
     /**
-     * @covers Sandbox\Filters::remove_all_filters
+     * @covers Sandbox\Filters::removeAllFilters
      */
-    public function test_remove_all_filters_returns_true_on_success()
+    public function testRemoveAllFiltersReturnsTrueOnSuccess()
     {
         $callback = function () {
-            /* Void */
+            /* void */
         };
 
-        Sandbox\Filters::add_filter('some_filter', $callback, 1);
+        Sandbox\Filters::addFilter('some_filter', $callback, 1);
 
         $this->assertTrue(
-            Sandbox\Filters::remove_all_filters('some_filter')
+            Sandbox\Filters::removeAllFilters('some_filter')
         );
     }
 
     /**
-     * @covers Sandbox\Filters::apply_filter
+     * @covers Sandbox\Filters::applyFilter
      */
     public function testApplyFilterReturnsValueIfActionIsNotFound()
     {
-        $this->assertEquals(Sandbox\Filters::apply_filter('somefilter', 'value'), 'value');
+        $this->assertEquals(Sandbox\Filters::applyFilter('some_filter', 'value'), 'value');
     }
 }

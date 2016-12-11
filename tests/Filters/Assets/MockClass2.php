@@ -3,7 +3,7 @@ namespace Sandbox\Tests\Filters\Assets;
 
 use Sandbox;
 
-class myMockClass2
+class MockClass2
 {
     /**
      * @param string $text

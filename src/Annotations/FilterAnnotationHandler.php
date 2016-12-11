@@ -26,15 +26,19 @@ class FilterAnnotationHandler
             /**
              * Weird but still be need to do this.
              */
-            $loader = new $this->annotationClass; $loader;
+            $loader = new $this->annotationClass;
+            $loader;
 
             /**
              * Autoload or instantiate the object
              */
             $annotation = $this->reader->getMethodAnnotation($reflectionMethod, $this->annotationClass);
 
-            Sandbox\Filters::add_filter($annotation->getPropertyName(),
-                [$object, $reflectionMethod->name], $annotation->priority);
+            Sandbox\Filters::addFilter(
+                $annotation->getPropertyName(),
+                [$object, $reflectionMethod->name],
+                $annotation->priority
+            );
         }
     }
 }

@@ -3,7 +3,7 @@ namespace Sandbox\Tests\Filters\Assets;
 
 use Sandbox;
 
-class myMockClass1
+class MockClass1
 {
 
     /**
@@ -11,15 +11,15 @@ class myMockClass1
      */
     public function __construct()
     {
-        Sandbox\Filters::add_filter('manipulate_string', [$this, 'prepend_chars']);
-        Sandbox\Filters::add_filter('manipulate_string', [$this, 'append_chars']);
+        Sandbox\Filters::addFilter('manipulate_string', [$this, 'prependChars']);
+        Sandbox\Filters::addFilter('manipulate_string', [$this, 'appendChars']);
     }
 
     /**
      * @param string $text
      * @return string
      */
-    public function prepend_chars($text = '')
+    public function prependChars($text = '')
     {
         return '@@' . $text;
     }
@@ -28,7 +28,7 @@ class myMockClass1
      * @param string $text
      * @return string
      */
-    public function append_chars($text = '')
+    public function appendChars($text = '')
     {
         return $text . '@@';
     }
@@ -38,6 +38,6 @@ class myMockClass1
      */
     public function execute()
     {
-        return Sandbox\Filters::apply_filter('manipulate_string', 'This is a text');
+        return Sandbox\Filters::addFilter('manipulate_string', 'This is a text');
     }
 }

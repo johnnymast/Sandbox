@@ -10,9 +10,9 @@ use Sandbox;
 class FiltersChainedTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Sandbox\Filters::apply_filter
+     * @covers Sandbox\Filters::applyFilter
      */
-    public function test_apply_filter_works_correct_with_one_class_function()
+    public function testApplyFilterWorksCorrectWithOneClassMethod()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
@@ -21,19 +21,19 @@ class FiltersChainedTest extends \PHPUnit_Framework_TestCase
 
         $string = 'Hello World';
 
-        Sandbox\Filters::add_filter('prepend_chars', function ($text) {
+        Sandbox\Filters::addFilter('prepend_chars', function ($text) {
             return '@@' . $text;
         });
-        $output = Sandbox\Filters::apply_filter(['prepend_chars'], $string);
+        $output = Sandbox\Filters::applyFilter(['prepend_chars'], $string);
 
         $expected = '@@' . $string;
         $this->assertEquals($expected, $output);
     }
 
     /**
-     * @covers Sandbox\Filters::apply_filter
+     * @covers Sandbox\Filters::applyFilter
      */
-    public function test_apply_filter_works_correct_with_two_class_functions()
+    public function testApplyFilterWorksCorrectWithTwoClassMethods()
     {
         $filters = new \ReflectionClass('Sandbox\Filters');
         $property = $filters->getProperty('filters');
@@ -42,15 +42,15 @@ class FiltersChainedTest extends \PHPUnit_Framework_TestCase
 
         $string = 'Hello World';
 
-        Sandbox\Filters::add_filter('apply_chars', function ($text) {
+        Sandbox\Filters::addFilter('apply_chars', function ($text) {
             return '@@' . $text;
         });
 
-        Sandbox\Filters::add_filter('prepend_chars', function ($text) {
+        Sandbox\Filters::addFilter('prepend_chars', function ($text) {
             return $text . "@@";
         });
 
-        $output = Sandbox\Filters::apply_filter(['apply_chars', 'prepend_chars'], $string);
+        $output = Sandbox\Filters::applyFilter(['apply_chars', 'prepend_chars'], $string);
 
         $expected = '@@' . $string . '@@';
         $this->assertEquals($expected, $output);

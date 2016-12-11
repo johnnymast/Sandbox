@@ -3,7 +3,7 @@ namespace Sandbox\Tests\Actions\Assets;
 
 use Sandbox;
 
-class myMockClass2
+class MockClass2
 {
     public function outputAstrixSymbol()
     {

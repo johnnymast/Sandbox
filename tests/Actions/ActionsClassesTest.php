@@ -32,7 +32,7 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $instance = new Sandbox\Tests\Actions\Assets\myMockClass2;
+        $instance = new Sandbox\Tests\Actions\Assets\MockClass2;
 
 
         Sandbox\Actions::addAction('echo_astrix', [$instance, 'outputAstrixSymbol']);
@@ -56,7 +56,7 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
         $property->setAccessible(true);
         $property->setValue([]);
 
-        $instance = new Sandbox\Tests\Actions\Assets\myMockClass2;
+        $instance = new Sandbox\Tests\Actions\Assets\MockClass2;
 
 
         Sandbox\Actions::addAction('echo_astrix', [$instance, 'outputAstrixSymbol']);

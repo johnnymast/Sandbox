@@ -3,7 +3,7 @@ namespace Sandbox\Tests\Actions\Assets;
 
 use Sandbox;
 
-class myMockClass1
+class MockClass1
 {
 
     public function __construct()

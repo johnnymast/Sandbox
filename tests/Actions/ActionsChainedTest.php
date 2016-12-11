@@ -49,7 +49,7 @@ class FiltersChainedTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers Sandbox\Actions::doAction
      */
-    public function testtDoActionWorksCorrectWithTwoClassMethods()
+    public function testDoActionWorksCorrectWithTwoClassMethods()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');

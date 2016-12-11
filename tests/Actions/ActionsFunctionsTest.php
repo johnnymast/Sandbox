@@ -73,6 +73,6 @@ class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
      */
     public function testDoActionReturnsValueIfActionIsNotFound()
     {
-        $this->assertEquals(Sandbox\Actions::doAction('someaction', 'value'), 'value');
+        $this->assertEquals(Sandbox\Actions::doAction('some_action', 'value'), 'value');
     }
 }

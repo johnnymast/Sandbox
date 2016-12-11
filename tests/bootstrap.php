@@ -1,2 +1,4 @@
 <?php
-require_once dirname(__FILE__) . '/Actions/Assets/myCallbackFunctions.php';
+require_once dirname(__FILE__) . '/../vendor/autoload.php';
+require_once dirname(__FILE__) . '/Actions/Assets/CallbackFunctions.php';
+require_once dirname(__FILE__) . '/Filters/Assets/CallbackFunctions.php';
