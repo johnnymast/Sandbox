@@ -1,3 +1,5 @@
+![redbox-hooks-logo-klein](https://cloud.githubusercontent.com/assets/121194/21081963/afe99cc8-bfd1-11e6-9ac6-25922c8b58b2.png)
+
 # Redbox-hooks
 
 [![Build Status](https://travis-ci.org/johnnymast/Sandbox.svg?branch=master)](https://travis-ci.org/johnnymast/Sandbox)
