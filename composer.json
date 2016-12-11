@@ -9,9 +9,13 @@
       "email": "mastjohnny@gmail.com"
     }
   ],
+  "config": {
+    "disable-tls" : true
+  },
   "autoload": {
   "psr-4": {
-    "Sandbox\\": "src/"
+    "Sandbox\\": "src/",
+    "Sandbox\\Demos\\": "demos/"
   }
 },
   "autoload-dev": {
