@@ -62,16 +62,14 @@ class Hook
                 if ($entry['callback'] == $callback) {
                     unset($this->hooks[$priority][$index]);
 
-                    if (count($this->hooks[$priority]) == 0) {
-                        unset($this->hooks[$priority]);
-                    }
-
                     if (count($this->hooks[$priority]) > 0) {
                         $new = [];
                         foreach ($this->hooks[$priority] as $hook) {
                             $new[] = $hook;
                         }
                         $this->hooks[$priority] = $new;
+                    } elseif (count($this->hooks[$priority]) == 0) {
+                        unset($this->hooks[$priority]);
                     }
                 }
             }

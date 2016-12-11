@@ -1,7 +1,6 @@
 <?php
 namespace Sandbox\Tests\Hook;
 
-
 use Sandbox;
 
 /**
@@ -12,6 +11,8 @@ class HookTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     * Test that Sandbox\Hook::addHook adds new hooks correctly.
+     *
      * @covers Sandbox\Hook::addHook
      */
     public function testAddHookAddsNewHooksCorrectly()
@@ -41,6 +42,8 @@ class HookTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that Sandbox\Hook::getHooks returns an array of hooks.
+     *
      * @covers Sandbox\Hook::getHooks
      */
     public function testGetHooksReturnsAnArrayOfHooks()
@@ -62,6 +65,9 @@ class HookTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that Sandbox\Hook::removeCallbackWithPriority removed one hook
+     * correctly.
+     *
      * @covers Sandbox\Hook::removeCallbackWithPriority
      */
     public function testRemoveCallbackWithPriorityRemovesTheHookCorrectly()
@@ -81,6 +87,9 @@ class HookTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that Sandbox\Hook::removeCallbackWithPriority removes
+     * multiple hooks correctly.
+     *
      * @covers Sandbox\Hook::removeCallbackWithPriority
      */
     public function testRemoveCallbackWithPriorityRemovesMultipleHooksCorrectly()
@@ -105,7 +114,6 @@ class HookTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
-
         $hook = new Sandbox\Hook($tag);
         $hook->addHook($priority, $callback);
         $hook->addHook($priority, $callback2);
@@ -117,6 +125,8 @@ class HookTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test that Sandbox\Hook::removeAllHooks reset the hooks array.
+     *
      * @covers Sandbox\Hook::removeAllHooks
      */
     public function testRemoveAllHooksResetsTheActiveHooksToEmptyArray()
@@ -128,5 +138,4 @@ class HookTest extends \PHPUnit_Framework_TestCase
         $hook->removeAllHooks();
         $this->assertEmpty($hook->getHooks());
     }
-
 }

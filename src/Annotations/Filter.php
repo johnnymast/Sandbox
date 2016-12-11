@@ -9,6 +9,7 @@ class Filter
     private $propertyName;
     private $dataType = 'string';
     private $options = [];
+    public $priority = 0;
 
     public function __construct($options = [])
     {
@@ -17,8 +18,10 @@ class Filter
             unset($options['value']);
         }
 
+        $this->priority = 10;
+
         $default = [
-            'priority' => 0,
+            'priority' => 10,
         ];
 
         foreach ($default as $key => $value) {

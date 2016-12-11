@@ -2,6 +2,8 @@
 namespace Sandbox;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use Sandbox\Annotations\Autoloader;
+use Sandbox\Annotations\FilterAnnotationHandler;
 
 class Filters
 {
@@ -24,7 +26,7 @@ class Filters
     {
         if (!self::$annotation_handler) {
             $reader = new AnnotationReader();
-            self::$annotation_handler = new Annotations\FilterAnnotationHandler($reader);
+            self::$annotation_handler = new FilterAnnotationHandler($reader);
         }
     }
 
@@ -101,6 +103,7 @@ class Filters
             unset(self::$filters[$tag]);
             return true;
         }
+
         return false;
     }
 

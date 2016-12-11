@@ -20,14 +20,12 @@ class FilterAnnotationHandler
 
         $reflectionObject = new \ReflectionObject($object);
 
-
         foreach ($reflectionObject->getMethods() as $reflectionMethod) {
 
             /**
              * Weird but still be need to do this.
              */
-            $loader = new $this->annotationClass;
-            $loader;
+            new $this->annotationClass;
 
             /**
              * Autoload or instantiate the object
