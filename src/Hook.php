@@ -38,6 +38,8 @@ class Hook
     }
 
     /**
+     * Return all hooks
+     *
      * @return array
      */
     public function getHooks()
@@ -46,6 +48,8 @@ class Hook
     }
 
     /**
+     * Remove a given hook with a callback and priority.
+     *
      * @param int $priority
      * @param string $callback
      */
@@ -75,10 +79,10 @@ class Hook
     }
 
     /**
-     *
+     * Remove all known hooks.
      */
     public function removeAllHooks()
     {
-        unset($this->hooks);
+        $this->hooks = [];
     }
 }

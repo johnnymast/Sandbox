@@ -7,7 +7,7 @@ use Sandbox;
  * @since version 1.0
  * @covers Sandbox\Filters
  */
-class FilerObjectTest extends \PHPUnit_Framework_TestCase
+class FilterObjectTest extends \PHPUnit_Framework_TestCase
 {
     public function testFails()
     {
