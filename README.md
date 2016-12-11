@@ -1,9 +1,10 @@
-# Sandbox
+# Redbox-hooks
+
 [![Build Status](https://travis-ci.org/johnnymast/Sandbox.svg?branch=master)](https://travis-ci.org/johnnymast/Sandbox)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/johnnymast/Sandbox/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/johnnymast/Sandbox/?branch=master)
 [![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Contact author)](https://twitter.com/intent/tweet?text=@mastjohnny)
 
-Xxx allow you use Wordpress actions and filters in your own code. The syntax is easy to use as you expect it to be after seeing it in Wordpress it self.
+Redbox-hooks allow you use Wordpress actions and filters in your own code. The syntax is easy to use as you expect it to be after seeing it in Wordpress it self.
 
 ***Have a look at***
 * [Filters](FILTERS.md)
@@ -15,17 +16,29 @@ I a am not a TDD guy but 50% of this code was written with the TDD concept in mi
 # Chaining filters
 
 ```php
-Sandbox\Filters::add_filter('prepend_at', function($text='') {
-    return '@@'.$text;
+/**
+ * This is the first registered filter. It's going to prepend
+ * '@@' in front of the text.
+ */
+Filters::addFilter('prepend_at', function ($text = '') {
+    return '@@' . $text;
 });
 
-Sandbox\Filters::add_filter('append_at', function($text='') {
-    return $text.'@@';
+/**
+ * This is the second registered filter. It's going to append
+ * '@@' to the text.
+ */
+Filters::addFilter('append_at', function ($text = '') {
+    return $text . '@@';
 });
 
-
-$out = Sandbox\Filters::apply_filter(['prepend_at', 'append_at'], 'This is a text');
-echo "Output: ".$out."\n";
+/**
+ * The result should be
+ *
+ * Result: @@This is a text@@
+ */
+$out = Filters::applyFilter(['prepend_at', 'append_at'], 'This is a text');
+echo "Result: " . $out . "\n";
 ```
 
 ***Output***
@@ -39,15 +52,24 @@ Output: @@This is a text@@
 #Chaining actions
 
 ```php
-Sandbox\Actions::add_action('say_hi', function($name='') {
-    echo "Hi: ".$name."\n";
+<?php
+namespace Sandbox\Demos;
+
+require 'autoload.php';
+
+use Sandbox\Actions;
+
+Actions::addAction('say_hi', function ($name = '') {
+    echo "Hi: " . $name . "\n";
+    return $name;
 });
 
-Sandbox\Actions::add_action('say_bye', function($name='') {
-    echo "Bye: ".$name."\n";
+Actions::addAction('say_bye', function ($name = '') {
+    echo "Bye: " . $name . "\n";
+    return $name;
 });
 
-Sandbox\Actions::do_action(['say_hi', 'say_bye'], 'GitHub');
+Actions::doAction(['say_hi', 'say_bye'], 'GitHub');
 ```
 
 ```bash
