@@ -42,4 +42,9 @@ class Test
 }
 Filters::registerFilterObject(new Test());
 
+/**
+ * The result should be:
+ *
+ * Result @!!Hello world
+ */
 echo "Result ".Filters::applyFilter('prepend_at', 'Hello world');
