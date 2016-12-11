@@ -54,6 +54,11 @@ Filters::addFilter('prepend_at', 'Sandbox\Demos\func_first', 0);
 
 This package is created and maintained by [Johnny Mast](https://github.com/johnnymast).
 
+## Special thanks 
+
+Sepcial thanks for the packages goes to [this song](https://www.youtube.com/watch?v=NUTGr5t3MoY) of [Greenday](https://nl.wikipedia.org/wiki/Green_Day) on winch i grew up on.
+
+
 ## License
 
 The MIT License (MIT)
