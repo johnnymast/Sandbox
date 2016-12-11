@@ -2,81 +2,18 @@
 
 [![Build Status](https://travis-ci.org/johnnymast/Sandbox.svg?branch=master)](https://travis-ci.org/johnnymast/Sandbox)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/johnnymast/Sandbox/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/johnnymast/Sandbox/?branch=master)
-[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Contact author)](https://twitter.com/intent/tweet?text=@mastjohnny)
+[![Twitter URL](https://img.shields.io/twitter/url/http/shields.io.svg?style=social&label=Contact%20author)](https://twitter.com/intent/tweet?text=@mastjohnny)
 
 Redbox-hooks allow you use Wordpress actions and filters in your own code. The syntax is easy to use as you expect it to be after seeing it in Wordpress it self.
 
-***Have a look at***
+If you want to look at some demo's in details then read the manual for:
+ 
 * [Filters](FILTERS.md)
 * [Actions](ACTIONS.md)
 
 #Fun fact
-I a am not a TDD guy but 50% of this code was written with the TDD concept in mind. Actually i was pretty mutch surprised on how it worked out and the speed the development came in.
+I a am not a TDD guy but 50% of this code was written with the TDD concept in mind. Actually i was pretty much surprised on how it worked out and the speed the development came in.
 
-# Chaining filters
-
-```php
-/**
- * This is the first registered filter. It's going to prepend
- * '@@' in front of the text.
- */
-Filters::addFilter('prepend_at', function ($text = '') {
-    return '@@' . $text;
-});
-
-/**
- * This is the second registered filter. It's going to append
- * '@@' to the text.
- */
-Filters::addFilter('append_at', function ($text = '') {
-    return $text . '@@';
-});
-
-/**
- * The result should be
- *
- * Result: @@This is a text@@
- */
-$out = Filters::applyFilter(['prepend_at', 'append_at'], 'This is a text');
-echo "Result: " . $out . "\n";
-```
-
-***Output***
-
-```bash
-$ php ./functions.php
-Output: @@This is a text@@
-
-```
-
-#Chaining actions
-
-```php
-<?php
-namespace Sandbox\Demos;
-
-require 'autoload.php';
-
-use Sandbox\Actions;
-
-Actions::addAction('say_hi', function ($name = '') {
-    echo "Hi: " . $name . "\n";
-    return $name;
-});
-
-Actions::addAction('say_bye', function ($name = '') {
-    echo "Bye: " . $name . "\n";
-    return $name;
-});
-
-Actions::doAction(['say_hi', 'say_bye'], 'GitHub');
-```
-
-```bash
-$ php ./actions.php
-Hi: GitHub
-Bye: GitHub
-```
 
 ## Requirements
 
@@ -88,6 +25,9 @@ The following versions of PHP are supported by this version.
 + HHVM
 
 ## Known issues
+
+If you come across a bug/issue you can always report them to the [issue tracker](issues). While developing this package this is something things
+i noticed. Those things are listed below.
 
 ### Filter/Action function callback is not called
 If you have functions inside a namespace. So should add the full namespace to the callback function like this example here.
