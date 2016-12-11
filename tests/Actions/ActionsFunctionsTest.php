@@ -3,8 +3,6 @@ namespace Sandbox\Tests\Actions;
 
 use Sandbox;
 
-require_once dirname(__FILE__) . '/Assets/myCallbackFunctions.php';
-
 /**
  * @since version 1.0
  * @covers Sandbox\Actions
@@ -16,7 +14,7 @@ class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
      * @param callable $callback
      * @return mixed
      */
-    private function capture_test_output(callable $callback)
+    private function captureTestOutput(callable $callback)
     {
         ob_start();
         call_user_func($callback);
@@ -26,50 +24,55 @@ class ActionsFunctionsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Actions::do_action
+     * @covers Sandbox\Actions::doAction
      */
-    public function test_add_action_works_correct_with_one_actions()
+    public function testAddActionWorksCorrectWithOneAction()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix',
-            'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_astrix_symbol');
+        Sandbox\Actions::addAction('echo_astrix', 'Sandbox\Tests\Actions\Assets\outputAstrixSymbol');
 
         $expected = '*';
-        $output = $this->capture_test_output(
+        $output = $this->captureTestOutput(
             function () {
-                Sandbox\Actions::do_action('echo_astrix');
+                Sandbox\Actions::doAction('echo_astrix');
             }
         );
         $this->assertEquals($expected, $output);
     }
 
     /**
-     * @covers Sandbox\Actions::do_action
+     * @covers Sandbox\Actions::doAction
      */
-    public function test_add_action_works_correct_with_two_actions()
+    public function testAddActionWorksCorrectWithTwoActions()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix',
-            'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_astrix_symbol');
+        Sandbox\Actions::addAction('echo_astrix', 'Sandbox\Tests\Actions\Assets\outputAstrixSymbol');
 
-        Sandbox\Actions::add_action('echo_at',
-            'Sandbox\Tests\Actions\Assets\my_callback_functions_actions_output_at_symbol');
+        Sandbox\Actions::addAction('echo_at', 'Sandbox\Tests\Actions\Assets\outputAtSymbol');
 
         $expected = '*@';
-        $output = $this->capture_test_output(
+        $output = $this->captureTestOutput(
             function () {
-                Sandbox\Actions::do_action('echo_astrix');
-                Sandbox\Actions::do_action('echo_at');
+                Sandbox\Actions::doAction('echo_astrix');
+                Sandbox\Actions::doAction('echo_at');
             }
         );
         $this->assertEquals($expected, $output);
+    }
+
+    /**
+     * @covers Sandbox\Actions::doAction
+     */
+    public function testDoActionReturnsValueIfActionIsNotFound()
+    {
+        $this->assertEquals(Sandbox\Actions::doAction('someaction', 'value'), 'value');
     }
 }

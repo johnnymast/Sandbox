@@ -313,4 +313,12 @@ class FiltersStaticTest extends \PHPUnit_Framework_TestCase
             Sandbox\Filters::remove_all_filters('some_filter')
         );
     }
+
+    /**
+     * @covers Sandbox\Filters::apply_filter
+     */
+    public function testApplyFilterReturnsValueIfActionIsNotFound()
+    {
+        $this->assertEquals(Sandbox\Filters::apply_filter('somefilter', 'value'), 'value');
+    }
 }

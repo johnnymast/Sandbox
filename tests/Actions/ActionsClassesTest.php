@@ -13,7 +13,7 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
      * @param callable $callback
      * @return mixed
      */
-    private function capture_test_output(callable $callback)
+    private function captureTestOutput(callable $callback)
     {
         ob_start();
         call_user_func($callback);
@@ -23,9 +23,9 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Actions::do_action
+     * @covers Sandbox\Actions::doAction
      */
-    public function test_do_action_works_correct_with_one_class_function()
+    public function testDoActionWorksCorrectWithOneClassMethod()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -35,21 +35,21 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
         $instance = new Sandbox\Tests\Actions\Assets\myMockClass2;
 
 
-        Sandbox\Actions::add_action('echo_astrix', [$instance, 'output_astrix_symbol']);
+        Sandbox\Actions::addAction('echo_astrix', [$instance, 'outputAstrixSymbol']);
 
         $expected = '*';
-        $output = $this->capture_test_output(
+        $output = $this->captureTestOutput(
             function () {
-                Sandbox\Actions::do_action('echo_astrix');
+                Sandbox\Actions::doAction('echo_astrix');
             }
         );
         $this->assertEquals($expected, $output);
     }
 
     /**
-     * @covers Sandbox\Actions::do_action
+     * @covers Sandbox\Actions::doAction
      */
-    public function test_do_action_works_correct_with_two_class_functions()
+    public function testDoActionWorksCorrectWithTwoClassMethods()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -59,14 +59,14 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
         $instance = new Sandbox\Tests\Actions\Assets\myMockClass2;
 
 
-        Sandbox\Actions::add_action('echo_astrix', [$instance, 'output_astrix_symbol']);
-        Sandbox\Actions::add_action('echo_at', [$instance, 'output_at_symbol']);
+        Sandbox\Actions::addAction('echo_astrix', [$instance, 'outputAstrixSymbol']);
+        Sandbox\Actions::addAction('echo_at', [$instance, 'outputAtSymbol']);
 
         $expected = '*@';
-        $output = $this->capture_test_output(
+        $output = $this->captureTestOutput(
             function () {
-                Sandbox\Actions::do_action('echo_astrix');
-                Sandbox\Actions::do_action('echo_at');
+                Sandbox\Actions::doAction('echo_astrix');
+                Sandbox\Actions::doAction('echo_at');
             }
         );
         $this->assertEquals($expected, $output);

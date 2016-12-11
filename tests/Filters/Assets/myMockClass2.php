@@ -9,7 +9,7 @@ class myMockClass2
      * @param string $text
      * @return string
      */
-    public function prepend_chars($text = '')
+    public function prependChars($text = '')
     {
         return '@@' . $text;
     }
@@ -18,7 +18,7 @@ class myMockClass2
      * @param string $text
      * @return string
      */
-    public function append_chars($text = '')
+    public function appendChars($text = '')
     {
         return $text . '@@';
     }

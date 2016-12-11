@@ -5,12 +5,12 @@ use Sandbox;
 
 class myMockClass2
 {
-    public function output_astrix_symbol()
+    public function outputAstrixSymbol()
     {
         echo '*';
     }
 
-    public function output_at_symbol()
+    public function outputAtSymbol()
     {
         echo '@';
     }

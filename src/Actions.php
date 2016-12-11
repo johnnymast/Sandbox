@@ -9,18 +9,13 @@ class Actions
      */
     private static $actions = [];
 
-    public static function getActions()
-    {
-        return self::$actions;
-    }
-
     /**
      * @param string $tag
      * @param string $callback
      * @param int $priority
      * @return bool
      */
-    public static function add_action($tag = '', $callback = '', $priority = 10)
+    public static function addAction($tag = '', $callback = '', $priority = 10)
     {
 
         if (empty($tag) || empty($callback)) {
@@ -41,14 +36,14 @@ class Actions
      * @param string $value
      * @return string
      */
-    public static function do_action($action = '', $value = '')
+    public static function doAction($action = '', $value = '')
     {
         if (is_array($action)) {
             foreach ($action as $single) {
-                $value = self::execute_action($single, $value);
+                $value = self::execute($single, $value);
             }
         } else {
-            $value = self::execute_action($action, $value);
+            $value = self::execute($action, $value);
         }
         return $value;
     }
@@ -58,7 +53,7 @@ class Actions
      * @param string $value
      * @return string
      */
-    private static function execute_action($tag, $value = '')
+    private static function execute($tag, $value = '')
     {
         if (isset(self::$actions[$tag]) === false) {
             return $value;
@@ -83,7 +78,7 @@ class Actions
      * @param string $callback
      * @return bool
      */
-    public static function remove_action($tag, $callback)
+    public static function removeAction($tag, $callback)
     {
         if (empty($tag) || empty($callback)) {
             return false;
@@ -110,7 +105,7 @@ class Actions
      * @param string $tag
      * @return bool
      */
-    public static function remove_all_actions($tag)
+    public static function removeAllActions($tag)
     {
         if (empty($tag)) {
             return false;

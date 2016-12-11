@@ -14,7 +14,7 @@ class FiltersChainedTest extends \PHPUnit_Framework_TestCase
      * @param callable $callback
      * @return mixed
      */
-    private function capture_test_output(callable $callback)
+    private function captureTestOutput(callable $callback)
     {
         ob_start();
         call_user_func($callback);
@@ -24,50 +24,50 @@ class FiltersChainedTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @covers Sandbox\Actions::do_action
+     * @covers Sandbox\Actions::doAction
      */
-    public function test_apply_filter_works_correct_with_one_class_function()
+    public function testDoActionWorksCorrectWithOneClassMethod()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix', function () {
+        Sandbox\Actions::addAction('echo_astrix', function () {
             echo '*';
         });
 
         $expected = '*';
-        $output = $this->capture_test_output(
+        $output = $this->captureTestOutput(
             function () {
-                Sandbox\Actions::do_action(['echo_astrix']);
+                Sandbox\Actions::doAction(['echo_astrix']);
             }
         );
         $this->assertEquals($expected, $output);
     }
 
     /**
-     * @covers Sandbox\Actions::do_action
+     * @covers Sandbox\Actions::doAction
      */
-    public function test_apply_filter_works_correct_with_two_class_functions()
+    public function testtDoActionWorksCorrectWithTwoClassMethods()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
         $property->setAccessible(true);
         $property->setValue([]);
 
-        Sandbox\Actions::add_action('echo_astrix', function () {
+        Sandbox\Actions::addAction('echo_astrix', function () {
             echo '*';
         });
 
-        Sandbox\Actions::add_action('echo_at', function () {
+        Sandbox\Actions::addAction('echo_at', function () {
             echo '@';
         });
 
         $expected = '*@';
-        $output = $this->capture_test_output(
+        $output = $this->captureTestOutput(
             function () {
-                Sandbox\Actions::do_action(['echo_astrix', 'echo_at']);
+                Sandbox\Actions::doAction(['echo_astrix', 'echo_at']);
             }
         );
         $this->assertEquals($expected, $output);

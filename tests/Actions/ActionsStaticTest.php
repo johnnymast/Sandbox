@@ -4,27 +4,16 @@ namespace Sandbox\Tests\Actions;
 
 use Sandbox;
 
+/**
+ * @since version 1.0
+ * @covers Sandbox\Actions
+ */
 class ActionsStaticTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @covers Sandbox\Actions::add_action
+     * @covers Sandbox\Actions::addAction
      */
-    public function test_add_action_returns_false_on_empty_tag()
-    {
-        $actions = new \ReflectionClass('Sandbox\Actions');
-        $property = $actions->getProperty('actions');
-        $property->setAccessible(true);
-        $property->setValue([]);
-        
-        $this->assertFalse(
-            Sandbox\Actions::add_action('', 'some_callback')
-        );
-    }
-
-    /**
-     * @covers Sandbox\Actions::add_action
-     */
-    public function test_add_action_returns_false_on_empty_callback()
+    public function testAddActionReturnsFalseOnEmptyTag()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -32,14 +21,29 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $property->setValue([]);
 
         $this->assertFalse(
-            Sandbox\Actions::add_action('some_action', '')
+            Sandbox\Actions::addAction('', 'some_callback')
         );
     }
 
     /**
-     * @covers Sandbox\Actions::add_action
+     * @covers Sandbox\Actions::addAction
      */
-    public function test_add_action_returns_true_on_success()
+    public function testAddActionReturnsFalseOnEmptyCallback()
+    {
+        $actions = new \ReflectionClass('Sandbox\Actions');
+        $property = $actions->getProperty('actions');
+        $property->setAccessible(true);
+        $property->setValue([]);
+
+        $this->assertFalse(
+            Sandbox\Actions::addAction('some_action', '')
+        );
+    }
+
+    /**
+     * @covers Sandbox\Actions::addAction
+     */
+    public function testAddActionReturnsTrueOnSuccess()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -51,14 +55,14 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         };
 
         $this->assertTrue(
-            Sandbox\Actions::add_action('some_action', $callback)
+            Sandbox\Actions::addAction('some_action', $callback)
         );
     }
 
     /**
-     * @covers Sandbox\Actions::add_action
+     * @covers Sandbox\Actions::addAction
      */
-    public function test_add_action_adds_action()
+    public function testAddActionAddsActionCorrectly()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -70,13 +74,13 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
             /* void */
         };
 
-        $tag  = 'new_filter';
+        $tag = 'new_filter';
         $priority = 10;
 
         $hook = new Sandbox\Hook($tag);
         $hook->addHook($priority, $callback);
 
-        Sandbox\Actions::add_action($tag, $callback);
+        Sandbox\Actions::addAction($tag, $callback);
 
         $actual = $property->getValue()[$tag];
         $expected = $hook;
@@ -84,9 +88,9 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Actions::add_action
+     * @covers Sandbox\Actions::addAction
      */
-    public function test_add_action_adds_multiple_actions()
+    public function testAddActionAddsMultipleActions()
     {
         $filters = new \ReflectionClass('Sandbox\Actions');
         $property = $filters->getProperty('actions');
@@ -108,8 +112,8 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $hook->addHook($priority, $callback1);
         $hook->addHook($priority, $callback2);
 
-        Sandbox\Actions::add_action($tag, $callback1);
-        Sandbox\Actions::add_action($tag, $callback2);
+        Sandbox\Actions::addAction($tag, $callback1);
+        Sandbox\Actions::addAction($tag, $callback2);
 
         $actual = $property->getValue()[$tag];
         $expected = $hook;
@@ -117,9 +121,9 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Actions::add_action
+     * @covers Sandbox\Actions::addAction
      */
-    public function test_add_action_arranges_priority_correct()
+    public function testAddActionOrdersPriorityCorrect()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -140,8 +144,8 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $hook->addHook(1, $callback1);
         $hook->addHook(0, $callback2);
 
-        Sandbox\Actions::add_action($tag, $callback1, 1);
-        Sandbox\Actions::add_action($tag, $callback2, 0);
+        Sandbox\Actions::addAction($tag, $callback1, 1);
+        Sandbox\Actions::addAction($tag, $callback2, 0);
 
         $actual = $property->getValue()[$tag]->getHooks()[0][0];
         $expected = $hook->getHooks()[0][0];
@@ -150,9 +154,9 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Actions::add_action
+     * @covers Sandbox\Actions::addAction
      */
-    public function test_add_action_in_class_method_has_the_correct_callback()
+    public function testAddActionInClassMethodHasTheCorrectCallback()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -165,8 +169,8 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         $priority = 10;
 
         $hook = new Sandbox\Hook($tag);
-        $hook->addHook($priority, [$instance, 'first_function']);
-        $hook->addHook($priority, [$instance, 'second_function']);
+        $hook->addHook($priority, [$instance, 'firstAction']);
+        $hook->addHook($priority, [$instance, 'secondAction']);
 
         $expected = $hook;
         $actual = $property->getValue()[$tag];
@@ -174,43 +178,55 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Actions::remove_action
+     * @covers Sandbox\Actions::removeAction
      */
-    public function test_remove_action_returns_false_on_empty_tag()
+    public function testRemoveActionReturnsFalseOnEmptyTag()
     {
         $this->assertFalse(
-            Sandbox\Actions::remove_action('', 'some_callback')
+            Sandbox\Actions::removeAction('', 'some_callback')
         );
     }
 
     /**
-     * @covers Sandbox\Actions::remove_action
+     * @covers Sandbox\Actions::removeAction
      */
-    public function test_remove_action_returns_false_on_empty_callback()
+    public function testRemoveActionReturnsFalseOnEmptyCallback()
     {
         $this->assertFalse(
-            Sandbox\Actions::remove_action('some_action', '')
+            Sandbox\Actions::removeAction('some_action', '')
         );
     }
 
     /**
-     * @covers Sandbox\Actions::remove_action
+     * @covers Sandbox\Actions::removeAction
      */
-    function test_remove_action_returns_true_on_success()
+    public function testRemoveActionReturnsTrueOnSuccess()
     {
         $callback = function () {
+            /* void */
         };
-        Sandbox\Actions::add_action('some_action', $callback);
+
+        Sandbox\Actions::addAction('some_action', $callback);
 
         $this->assertTrue(
-            Sandbox\Actions::remove_action('some_action', $callback)
+            Sandbox\Actions::removeAction('some_action', $callback)
         );
     }
 
     /**
-     * @covers Sandbox\Actions::remove_action
+     * @covers Sandbox\Actions::removeAction
      */
-    public function test_remove_action_removes_the_action_correctly()
+    public function testRemoveActionReturnsFalseOnFailing()
+    {
+        $this->assertFalse(
+            Sandbox\Actions::removeAction('something', 'something')
+        );
+    }
+
+    /**
+     * @covers Sandbox\Actions::removeAction
+     */
+    public function testRemoveActionRemovesTheActionCorrectly()
     {
         $actions = new \ReflectionClass('Sandbox\Actions');
         $property = $actions->getProperty('actions');
@@ -226,9 +242,9 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
         /**
          * Test callback is a string
          */
-        Sandbox\Actions::add_action($tag, 'callback1', 1);
-        Sandbox\Actions::add_action($tag, 'callback2', 2);
-        Sandbox\Actions::remove_action($tag, 'callback1');
+        Sandbox\Actions::addAction($tag, 'callback1', 1);
+        Sandbox\Actions::addAction($tag, 'callback2', 2);
+        Sandbox\Actions::removeAction($tag, 'callback1');
 
         $hook = new Sandbox\Hook($tag);
         $hook->addHook(2, 'callback2');
@@ -251,9 +267,9 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
             /* Void */
         };
 
-        Sandbox\Actions::add_action($tag, $callback1, 1);
-        Sandbox\Actions::add_action($tag, $callback2, 2);
-        Sandbox\Actions::remove_action($tag, $callback1);
+        Sandbox\Actions::addAction($tag, $callback1, 1);
+        Sandbox\Actions::addAction($tag, $callback2, 2);
+        Sandbox\Actions::removeAction($tag, $callback1);
 
         $hook = new Sandbox\Hook($tag);
         $hook->addHook(2, $callback2);
@@ -269,10 +285,10 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
          */
         $tag = 'do_some_things';
         $instance = new Sandbox\Tests\Actions\Assets\myMockClass1;
-        Sandbox\Actions::remove_action($tag, [$instance, 'first_function']);
+        Sandbox\Actions::removeAction($tag, [$instance, 'firstAction']);
 
         $hook = new Sandbox\Hook($tag);
-        $hook->addHook(10, [$instance, 'second_function']);
+        $hook->addHook(10, [$instance, 'secondAction']);
 
         $expected = $hook;
         $actual = $property->getValue()[$tag];
@@ -282,26 +298,39 @@ class ActionsStaticTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Sandbox\Actions::remove_all_actions
+     * @covers Sandbox\Actions::removeAllActions
      */
-    public function test_remove_all_actions_false_on_empty_tag()
+    public function testRemoveAllActionsReturnsFalseOnEmptyTag()
     {
         $this->assertFalse(
-            Sandbox\Actions::remove_all_actions('')
+            Sandbox\Actions::removeAllActions('')
         );
     }
 
     /**
-     * @covers Sandbox\Actions::remove_all_actions
+     * Test that Actions::removeAllActions will return false if the tag was not
+     * found/
+     *
+     * @covers Sandbox\Actions::removeAllActions
      */
-    public function test_remove_all_actions_returns_true_on_success()
+    public function testRemoveAllActionsReturnsFalseIfTagIsNotFound()
+    {
+        $this->assertFalse(Sandbox\Actions::removeAllActions('i_dont_exist'));
+    }
+
+    /**
+     * @covers Sandbox\Actions::removeAllActions
+     */
+    public function testRemoveAllActionsReturnsTrueOnSuccess()
     {
         $callback = function () {
+            /* void */
         };
-        Sandbox\Actions::add_action('some_action', $callback, 1);
+
+        Sandbox\Actions::addAction('some_action', $callback, 1);
 
         $this->assertTrue(
-            Sandbox\Actions::remove_all_actions('some_action')
+            Sandbox\Actions::removeAllActions('some_action')
         );
     }
 }

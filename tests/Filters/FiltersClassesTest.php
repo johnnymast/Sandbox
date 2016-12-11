@@ -22,7 +22,7 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
         $string = 'Hello World';
         $instance = new Sandbox\Tests\Filters\Assets\myMockClass2;
 
-        Sandbox\Filters::add_filter('prepend_chars', [$instance, 'prepend_chars']);
+        Sandbox\Filters::add_filter('prepend_chars', [$instance, 'prependChars']);
         $output = Sandbox\Filters::apply_filter('prepend_chars', $string);
 
         $expected = '@@' . $string;
@@ -42,8 +42,8 @@ class FiltersClassesTest extends \PHPUnit_Framework_TestCase
         $string = 'Hello World';
         $instance = new Sandbox\Tests\Filters\Assets\myMockClass2;
 
-        Sandbox\Filters::add_filter('apply_chars', [$instance, 'prepend_chars']);
-        Sandbox\Filters::add_filter('apply_chars', [$instance, 'append_chars']);
+        Sandbox\Filters::add_filter('apply_chars', [$instance, 'prependChars']);
+        Sandbox\Filters::add_filter('apply_chars', [$instance, 'appendChars']);
 
         $output = Sandbox\Filters::apply_filter('apply_chars', $string);
 

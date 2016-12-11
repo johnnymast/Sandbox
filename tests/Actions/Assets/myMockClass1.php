@@ -8,14 +8,14 @@ class myMockClass1
 
     public function __construct()
     {
-        Sandbox\Actions::add_action('do_some_things', [$this, 'first_function']);
-        Sandbox\Actions::add_action('do_some_things', [$this, 'second_function']);
+        Sandbox\Actions::addAction('do_some_things', [$this, 'firstAction']);
+        Sandbox\Actions::addAction('do_some_things', [$this, 'secondAction']);
     }
 
     /**
      * @param array $args
      */
-    public function first_function($args = [])
+    public function firstAction($args = [])
     {
         /* void */
     }
@@ -23,8 +23,8 @@ class myMockClass1
     /**
      * @param array $args
      */
-    public function second_function($args = [])
+    public function secondAction($args = [])
     {
-        /* Void */
+        /* void */
     }
 }
