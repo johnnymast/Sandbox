@@ -25,6 +25,13 @@ Filters::addFilter('append_at', function ($text = '') {
  * The result should be
  *
  * Result: @@This is a text@@
+ *
  */
 $out = Filters::applyFilter(['prepend_at', 'append_at'], 'This is a text');
 echo "Result: " . $out . "\n";
+
+/**
+ * This is not required in your code. I have to add this to reset my unit tests.
+ */
+Filters::removeAllFilters('prepend_at');
+Filters::removeAllFilters('append_at');

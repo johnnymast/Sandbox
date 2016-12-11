@@ -12,7 +12,7 @@ class Action
     /**
      * @param string $text
      */
-    public function firstFunc($text = '')
+    public function firstFunc()
     {
         echo "Called first\n";
     }
@@ -20,7 +20,7 @@ class Action
     /**
      * @param string $text
      */
-    public function secondFunc($text = '')
+    public function secondFunc()
     {
         echo "Called second\n";
     }
@@ -39,4 +39,16 @@ class Action
 }
 
 $instance = new Action;
-$out = $instance->execute();
+/**
+ * Result should be:
+ *
+ * Called first
+ * Called second
+ *
+ */
+$instance->execute();
+
+/**
+ * This is not required in your code. I have to add this to reset my unit tests.
+ */
+Actions::removeAllActions('say_hello');

@@ -15,4 +15,16 @@ Actions::addAction('say_bye', function ($name = '') {
     return $name;
 });
 
+/**
+ * Result should be:
+ *
+ * Hi: GitHub
+ * Bye: GitHub
+ *
+ */
 Actions::doAction(['say_hi', 'say_bye'], 'GitHub');
+
+/**
+ * This is not required in your code. I have to add this to reset my unit tests.
+ */
+Actions::removeAllActions('say_hi');

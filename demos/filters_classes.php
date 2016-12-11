@@ -32,4 +32,14 @@ class Worker
 $worker = new Worker;
 $out = $worker->execute();
 
+/**
+ * The result should be:
+ *
+ * Result: @@This is a text@@
+ */
 echo "Result: " . $out . "\n";
+
+/**
+ * This is not required in your code. I have to add this to reset my unit tests.
+ */
+Filters::removeAllFilters('manipulate_string');

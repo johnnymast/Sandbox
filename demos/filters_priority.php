@@ -5,17 +5,17 @@ use Sandbox\Filters;
 
 require 'autoload.php';
 
-function func_second($text = '')
+function secondFunction($text = '')
 {
     return '@@' . $text;
 }
-Filters::addFilter('prepend_at', 'Sandbox\Demos\func_second', 1);
+Filters::addFilter('prepend_at', 'Sandbox\Demos\secondFunction', 1);
 
-function func_first($text = '')
+function firstFunction($text = '')
 {
     return '!!' . $text;
 }
-Filters::addFilter('prepend_at', 'Sandbox\Demos\func_first', 0);
+Filters::addFilter('prepend_at', 'Sandbox\Demos\firstFunction', 0);
 
 $out = Filters::applyFilter('prepend_at', 'This is a text');
 

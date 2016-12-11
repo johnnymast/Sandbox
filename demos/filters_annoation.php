@@ -45,6 +45,11 @@ Filters::registerFilterObject(new Test());
 /**
  * The result should be:
  *
- * Result @!!Hello world
+ * Result: @!!Hello world
  */
-echo "Result ".Filters::applyFilter('prepend_at', 'Hello world');
+echo "Result: ".Filters::applyFilter('prepend_at', 'Hello world');
+
+/**
+ * This is not required in your code. I have to add this to reset my unit tests.
+ */
+Filters::removeAllFilters('prepend_at');
