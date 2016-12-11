@@ -26,12 +26,14 @@ class DemosTest extends \PHPUnit_Framework_TestCase
      * they should.
      *
      * @dataProvider expectedResults
+     * @param string $demo
+     * @param string $expected
      */
-    public function testDemos($demofile = '', $expected = '')
+    public function testDemos($demo = '', $expected = '')
     {
         $actual = $this->captureTestOutput(
-            function () use ($demofile) {
-                include DEMO_DIR . '/' . $demofile;
+            function () use ($demo) {
+                include DEMO_DIR . '/' . $demo;
             }
         );
         $this->assertEquals($expected, $actual);
@@ -62,7 +64,7 @@ class DemosTest extends \PHPUnit_Framework_TestCase
             ['actions_classes.php', "Called first\nCalled second\n"],
             ['actions_closures.php', "The callback is called\n"],
             ['actions_priority.php', "Called first\nCalled second\n"],
-            ['filters_annoation.php', "Result: @!!Hello world"],
+            ['filters_annotation.php', "Result: @!!Hello world"],
             ['filters_chaining.php', "Result: @@This is a text@@\n"],
             ['filters_classes.php', "Result: @@This is a text@@\n"],
             ['filters_closures.php', "Result: @@This is a text\n"],
@@ -70,5 +72,4 @@ class DemosTest extends \PHPUnit_Framework_TestCase
             ['filters_priority.php', "Result: @@!!This is a text\n"],
         ];
     }
-
 }

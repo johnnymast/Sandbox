@@ -2,7 +2,6 @@
 namespace Sandbox;
 
 use Doctrine\Common\Annotations\AnnotationReader;
-use Sandbox\Annotations\Autoloader;
 use Sandbox\Annotations\FilterAnnotationHandler;
 
 class Filters

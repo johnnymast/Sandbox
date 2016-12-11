@@ -2,7 +2,7 @@
 namespace Sandbox\Tests\Filters\Assets;
 
 /**
- * This use statement is actualy required.
+ * This use statement is actually required.
  * Phpstorm does freak out about it.
  */
 use Sandbox\Annotations\Filter;
