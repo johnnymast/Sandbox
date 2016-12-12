@@ -14,7 +14,7 @@ class FiltersChainedTest extends \PHPUnit_Framework_TestCase
      * @param callable $callback
      * @return mixed
      */
-    private function captureTestOutput(callable $callback)
+    private function captureTestOutput($callback)
     {
         ob_start();
         call_user_func($callback);
