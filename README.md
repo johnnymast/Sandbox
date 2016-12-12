@@ -56,7 +56,7 @@ This package is created and maintained by [Johnny Mast](https://github.com/johnn
 
 ## Special thanks 
 
-Sepcial thanks for the packages goes to [this song](https://www.youtube.com/watch?v=NUTGr5t3MoY) of [Greenday](https://nl.wikipedia.org/wiki/Green_Day) on winch i grew up on.
+Special thanks for the packages goes to [this song (Basket Case)](https://www.youtube.com/watch?v=NUTGr5t3MoY) of [Greenday](https://nl.wikipedia.org/wiki/Green_Day) on winch i grew up on. 
 
 
 ## License
