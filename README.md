@@ -32,7 +32,7 @@ The following versions of PHP are supported by this version.
 
 ## Known issues
 
-If you come across a bug/issue you can always report them to the [issue tracker](issues). While developing this package this is something things
+If you come across a bug/issue you can always report them to the [issue tracker](https://github.com/johnnymast/Sandbox/issues). While developing this package this is something things
 i noticed. Those things are listed below.
 
 ### Filter/Action function callback is not called
