@@ -14,7 +14,7 @@ If you want to look at some demo's in details then read the manual for:
 * [Actions](ACTIONS.md)
 
 # Why was this package created?
-...
+This package was created because i am building a new modulair cms. I figured i could use a package like this and started building.
 
 
 #Fun fact
