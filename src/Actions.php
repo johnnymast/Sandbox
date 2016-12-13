@@ -60,7 +60,6 @@ class Actions
         }
 
         $hooks = self::$actions[$tag]->getHooks();
-        reset(self::$actions[$tag]);
 
         foreach ($hooks as $priority => $callbacks) {
             do {

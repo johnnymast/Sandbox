@@ -135,7 +135,6 @@ class Filters
         }
 
         $hooks = self::$filters[$tag]->getHooks();
-        reset($hooks);
 
         foreach ($hooks as $priority => $callbacks) {
             do {
